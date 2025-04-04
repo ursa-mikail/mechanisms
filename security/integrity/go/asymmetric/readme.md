@@ -1,4 +1,5 @@
 | Task						   | Ed25519 ✅	 | ECDSA ✅ |
+|------------------------------|-------------|----------|
 | Generate keypair			   |     ✔️	     |    ✔️    |
 | Dump private key to `.pem`   |     ✔️	     |    ✔️    |
 | Generate X.509 cert		   |     ✔️	     |    ✔️    |
