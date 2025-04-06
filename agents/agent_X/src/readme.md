@@ -62,9 +62,12 @@ chmod +x agent_X
  ```
 
 ### 🔐 Optional Improvements
-Feature						| Idea
-Passcode obfuscation		| Use a hash instead of plaintext check (e.g., SHA256).
-In-memory exec (advanced)	| Use ctypes or mmap to avoid writing the binary to disk.
-Multi-pass options			| Add decoy options in run() to hide the trapdoor in plain sight.
-Log to memory only			| Add an in-memory action log instead of printing to stdout.
-Time/host lock				| Only allow decryption on certain hosts or at specific times.
+| Feature                 | Idea                                                             |
+|-------------------------|------------------------------------------------------------------|
+| Passcode obfuscation     | Use a hash instead of plaintext check (e.g., SHA256).           |
+| In-memory exec (advanced)| Use ctypes or mmap to avoid writing the binary to disk.         |
+| Multi-pass options       | Add decoy options in run() to hide the trapdoor in plain sight. |
+| Log to memory only       | Add an in-memory action log instead of printing to stdout.      |
+| Time/host lock           | Only allow decryption on certain hosts or at specific times.    |
+
+
