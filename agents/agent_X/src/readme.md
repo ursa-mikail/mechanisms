@@ -1,13 +1,13 @@
 # Stealth Tool Mimick
 Mimics a spy tool with a memory-hoarding, file-destroying encryption step, plus a trapdoor-activated execution flow.
 
-Caveat:
+`Caveat`:
 This is only a `command & control implant simulation`, red-team tool, or a basic secure remote job runner.
 Do NOT use for actual deployment.
 
 - In-memory key+payload storage: Keeps things transient and clean.
 - Base64 + Fernet: Simple but secure enough for many use cases; easy to reverse reliably.
-- Deletes the original: Great for minimizing footprints — nice opsec touch.
+- Deletes the original: For minimizing footprints — nice opsec touch.
 - Executable handling: Adapts seamlessly to binary payloads.
 - Trapdoor flow: User prompt gives it that “agent activation” vibe.
 - Self-cleaning: Removes restored payload after execution, leaving little behind. 
@@ -15,7 +15,7 @@ Do NOT use for actual deployment.
 ../target/debug/agent_X
 
 ```
-Prints: "i can hoard memory, but i am just spitting out files"
+Prints: "I can hoard memory, but I am just spitting out files"
 
 Creates files named file11.txt to file22.txt
 
