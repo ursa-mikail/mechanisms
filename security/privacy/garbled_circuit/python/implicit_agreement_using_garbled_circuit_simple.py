@@ -15,6 +15,7 @@ print("---Input parameters---")
 print("Operation:",operator)
 print("Input:",x,y)
 
+# Bob created 4 keys for inputs for Alice and Bob
 keyX_0 = Fernet.generate_key()
 keyX_1 = Fernet.generate_key()
 keyY_0 = Fernet.generate_key()
@@ -45,17 +46,22 @@ print("Cipher (first 20 chars): ",binascii.hexlify(bytearray(cipher_text10))[:40
 print("Cipher (first 20 chars): ",binascii.hexlify(bytearray(cipher_text11))[:40])
 
 
-if (x==0): keyB = keyX_0
-if (x==1): keyB = keyX_1
+if (x==0): keyB = keyX_0	# K(b=0)
+if (x==1): keyB = keyX_1	# K(b=1)
 
-if (y==0): keyA = keyY_0
-if (y==1): keyA = keyY_1
+if (y==0): keyA = keyY_0	# K(b=0)
+if (y==1): keyA = keyY_1	# K(b=1)
 
 print("\n---Bob and Alice's key---")
 print("Bob's key: ",binascii.hexlify(bytearray(keyB))[:20])
 print("Alice's key: ",binascii.hexlify(bytearray(keyA))[:20])
 
 print("\n---Decrypt with keys (where '.' is an exception):")
+
+# Bob passes the cipher_text values (cipher_text00 ... cipher_text11) to Alice, and provides the key for his input. If he says YES, he passes keyX_1, otherwise he will pass keyX_0.
+
+# Alice receives the 4 values, and Bob's key. Now she uses oblivious transfer to gain the key for her answer. If she says YES, we obtain the key for keyY_1, without Bob knowing that he says YES. If she says NO, she gets keyY_0.
+# Alice will have 2 keys and she tries all the ciphers:
 
 try:
 	print(Fernet(keyB).decrypt(Fernet(keyA).decrypt(cipher_text00)), end=' ')	
