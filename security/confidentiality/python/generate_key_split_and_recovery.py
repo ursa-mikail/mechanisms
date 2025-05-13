@@ -1,4 +1,5 @@
 #!pip install sslib
+
 import os
 import json
 import random
@@ -80,6 +81,39 @@ for key_name, key_value in parsed_keys.items():
     show_shares(shares_of_keys_split[count], N_SHARES)
     count += 1
 
+# store key_names
+print("\nFormatted JSON (key_names) before writing to key_names.json:")
+pretty_print_json(KEY_NAMES)
+
+with open('key_names.json', 'w') as f:
+    json.dump(KEY_NAMES, f)
+
+# store json 
+print("\nFormatted JSON (shares_of_keys_split) before writing to shares_of_keys_split.json:")
+pretty_print_json(shares_of_keys_split)
+
+with open('shares_of_keys_split.json', 'w') as f:
+    json.dump(shares_of_keys_split, f)
+
+del shares_of_keys_split
+del KEY_NAMES
+
+# print(f"KEY_NAMES: {KEY_NAMES}")
+
+# read key_names
+with open('key_names.json', 'r') as f:
+    KEY_NAMES = json.load(f)
+
+print(f"KEY_NAMES: {KEY_NAMES}")
+
+# read json
+with open('shares_of_keys_split.json', 'r') as f:
+    shares_of_keys_split = json.load(f)
+
+
+
+print("\nFormatted JSON (shares_of_keys_split) after reading from shares_of_keys_split.json:")
+pretty_print_json(shares_of_keys_split)
 
 # Step 4: Recombine and verify (with all shares given)
 keys_collected = []
@@ -144,102 +178,208 @@ print(reconstructed_json_hash)
 print("\n✅ Match with original hash:", reconstructed_json_hash == json_hash)
 
 
+
 """
 Generating keys...
-SHA256(root_key_encryption) = 2d833554566c3eaf858e1a4fc404f77faeb298e5638443e2ec04c8a95cf6b1d3
-SHA256(policy_encryption) = ae165c4085f43b7839ef61f491c63f20c746cdd53183019650e5f28011a61ae1
-SHA256(key_ursa) = 18e7b2ebbbd85413b3b18c666f7735e991da7111315c39d4bd19405fa3ee16ec
-SHA256(key_major) = 1fb5d260863653b0f8a8f9f4b1feeb8d98a94c99ff91ff69090aed14e05360f6
+SHA256(root_key_encryption) = ebbafb6830df94d9f9093c2aca43b5de3c50f3f3747200edb41ad79e74af2626
+SHA256(policy_encryption) = 3bfcbca65c3905c4544bc0008b049b8d4e8d722ad85324a9f502741d9d589dd1
+SHA256(key_ursa) = 64336c297f50018772f74f93882c41ff5d6d5c523d0c4e0f13e9306eb1246540
+SHA256(key_major) = 2c5bc606a3f17dcd5096dd9f4cbeecb68d65b98223f61d05cf4bb623c5a8e24f
 
 Formatted JSON:
 {
-    "key_major": "86a8b31730cb6561a4200c218cd2fba8a528cc5418007eb298053f24a142184e",
-    "key_ursa": "3fe320f4a919091e62c502c9f8123e854525d0136f119ff00ad88ecfdbbf75b2",
-    "policy_encryption": "02843b3921238a1992a47c69894a9b122f35d896fc919a3b3ad3a2dd132795cc",
-    "root_key_encryption": "93a936f02905e38ef36f79d2be8303c567b6db8e75a87428eb222f5cfd8b2719"
+    "key_major": "39964b5303318f7ed23a35425a220fdbd1cdbbf2a4c99c4fd49322c1f731aded",
+    "key_ursa": "53365b6d12662ee8047a5c0279d2c325d50e7a0774e113a06e4dc16eae1dc3d2",
+    "policy_encryption": "ba13616e57d92fc94c121da8d10108cbde50b8b556ccaf93d1190bd755a70897",
+    "root_key_encryption": "c2dabdde201c5dd65622675c6b4ef1d584cbbc64a4f19dee2d9bdda279ca20d9"
 }
 
 SHA256(JSON):
-fa852a65ea3cf10f6d1936b08ab0eb781f33c7adb7e06bfbfe7f432a93b2da7f
+fc68cf1b4eda2d6b69181bb2916e0d9695771fc97e547271d9df4ff6fd4cd0b1
 Key Name: key_major
-Key Value: 86a8b31730cb6561a4200c218cd2fba8a528cc5418007eb298053f24a142184e
+Key Value: 39964b5303318f7ed23a35425a220fdbd1cdbbf2a4c99c4fd49322c1f731aded
 
 Splitting secret with threshold 3 of 5...
 prime_mod: Af//////////////////////////////////////////////////////////////////////////////////////
-share_0: 1-uiIRrse8OjxqK8LkRSe3kI+JvRtU5EmMEW55p27FYbqp8qwzJZs68713lzdChKqKQ5A3p0rY5PkZhp4lakll6xg=
-share_1: 2-fKiFvicGl14sObZjg6kMyit4feQha7Kws/4Uozon83tApVQ7tE1cdjuFDuIyd/W8/6eRniVpR6jECwM20FBVqlM=
-share_2: 3-AXHLko9WQUqWfV0K4R26NOMFLXaMlcaeoBjnNFeUjhei/HktS+R5x7yuWZ8xABFG+mZ/RhTE5I5BM+5gaGRGB3IV
-share_3: 4-AZmLOCJVbFPlXZXAXRNbL9scqKcUsfUNWkAp2MR9984x3W43Y7YgfMcV9Ugjq1CeQngXVQspSrjCaTC1uiYqe0Jf
-share_4: 5-8+d2dySHs0rM49bXZIv9snHqD3x19v7fKcYB6fZlFyfjhHKDKUF7lXJYCbo0NfuVNG++gVKbxyxj0gMsFf2xGzE=
+share_0: 1-AYcjQ2Y8CiXu6i9WkKSIXye0vpRVXsE5KXF5SES5+U+PLht/OAJhoH4Z1dOc8uKh/qWzRqDy0IfaQtydqO/vkpne
+share_1: 2-AZtssC1fi7JqPzoilp+jALWoQDYpssmMa5g8yE/5xGy1zRZ2U+iQGsArEJKHKZ/PKYyOSDTiSI1+TQvAozw/cP+H
+share_2: 3-Zw9/jqC5B6cyUJdFIohK4T/pF7BdTC76pn/hU/GRvdg/VRa3Fu3RLGYRcSHdcOq1GvU49QGaQ09P86AiFlD/ll8=
+share_3: 4-AeoLsYn/kiWlw3K0nC04Pap7uTjpXkkg1pxCk1ChYUL2hNdgYY16w8LK2G9tDlX0oVDoGOFQxalNS5Q8JX4kPl5k
+share_4: 5-JGFGH3wXDGXyoHqbv7LZEVuwmdS1wGH/eYTeRgky/BCdnVNTTDbyg1lljWi8TuzuLmbn+c/Kv3g/7ZStc7ktV5k=
 Key Name: key_ursa
-Key Value: 3fe320f4a919091e62c502c9f8123e854525d0136f119ff00ad88ecfdbbf75b2
+Key Value: 53365b6d12662ee8047a5c0279d2c325d50e7a0774e113a06e4dc16eae1dc3d2
 
 Splitting secret with threshold 3 of 5...
 prime_mod: Af//////////////////////////////////////////////////////////////////////////////////////
-share_0: 1-7U2Wpr9Co5VXQyKybJvfwuxIl5QZgDQMUhiP9bz0dyc0WbAOE+ifJjymUxo5Tr0LpTh5G+ySbbQHLc1sJh4xIV4=
-share_1: 2-6a2F+1seyE3Y8Or41rr2/IfXdMu7emn1u94AnEvwJDDzu6Op2cuPOzx8XzbJv4lW6EBMOnr6/vXtHkwJ24VCdIg=
-share_2: 3-H1M0YwbGno+5apIEd41+3jfiygobHtQfdraKJN8mbFVzWhAFhw0AcDK4iobii8tH+Ufav+NyGSkYNd47hmxpW7A=
-share_3: 4-jj6h3cI6Jlr4sBfVTxN3Z/xql084bXKJgqIsj3aXT5SzNPUhG6zyxR9a1QqDs4Le2E8krCX3vE2IdIQBJtOl1tU=
-share_4: 5-Nm/Oa415X6+WwXxrXUzgmdVu3JsTZkUz36Dn3BJCze6zTFL8l6tmOgJjPsGtNrAbhVYp/0KL6GM92j1avLr35fg=
+share_0: 1-AfLvTtEOT1Q7k0K/HOHqN2iQdrciV/uxG5NyhxO071zRLfkzm3AupRGceEVuFoMrgrdgj0Caywc3bnIOj6biU0yP
+share_1: 2-ARkvcdNMdkKTrYQUn+mcVdqdhYvwJQFDXCHzYRQ1ekZiiRI9TTBmxoeSzalH7ktnRYpNMzhf6q6T2EZMySZGZ69h
+share_2: 3-AZz1nDnwqi0+svUyv01IwLtfXLKgyEYZ8d25x2W0A+/mRq9SRaXfxZIaN1/yuInmqaj8URuzwidLot4f3eKPcIym
+share_3: 4-AX5BzgT66xQ8o5YZewzveArV/Cs0Qco03MbFuggwjFlcZtByhNCZojEytWludT6prxNt6OqWUXFezjmHzdu9beRf
+share_4: 5-vRQHNGs4941/ZsjTKJB7yQFj9aqRjZQc3Rc4+6sTgsTpdZ4KsJRcZNxHxbskabBVyaH6pQeYjM1aWISZEdBftow=
 Key Name: policy_encryption
-Key Value: 02843b3921238a1992a47c69894a9b122f35d896fc919a3b3ad3a2dd132795cc
+Key Value: ba13616e57d92fc94c121da8d10108cbde50b8b556ccaf93d1190bd755a70897
 
 Splitting secret with threshold 3 of 5...
 prime_mod: Af//////////////////////////////////////////////////////////////////////////////////////
-share_0: 1-ASCT2vAcy4fk74knfb2h5Tua/QyjsNvHv353VWhRrkgT3+sHoDnio+/jECKYzDjNanpG2Op7ijjnC1i5Ri8ymCBV
-share_1: 2-o9TJQqr1mw+tuJxVH+ZWFbPKTu44F1oUvgcm3XQLJxCcCwnPtwCAtkw0LhbAJoMi4PSp5CAQnwrig+9kHL50Bro=
-share_2: 3-s/L9L96xm7NzwI+4WgWzv4Og+UDJ6ho19+etk8hP/ydmkmzBrL3OjHHShbMNAoJcljzUUSD0ZM/pstWL/9zJFpE=
-share_3: 4-AVDudre3/4nQQaEBp2v//jkKgQubZlQIIywY6YtOfNBYP4EwdhsajXJT6yltsszLF5ofWDF+NYo2IOVrvdiNl0/a
-share_4: 5-esc12jbfZWYXWfIiVdU1gkhqhf4NVSPcWpraxAaRmqMm11TtAha9Z/J+GUaxhV1T7Jw1hTfUDz2IG7H5ptDespY=
+share_0: 1-zF72YHE4f0WrohdRxzaVwPRj1Bwjsu5uCE+Xui2KKq20pt+jlu440hqlFuVYtYu13WJ8gllYYGLw0weLQFJrTts=
+share_1: 2-AVHfwxLvFmOd2o4orV7e3n37+FG9SVtOCeQBBoAyQLbUE5I0eK7uf0hD0I7cdQI3A2MV8dzeaHQbE2+x/LxxQm3s
+share_2: 3-Abrkx0isz94+8flrdwArQJpP8dwUoyqDNMt4fYI/U9zWfyZjtHhjC8Swt55IuEdoIcR+kUDIYJ2Mnws0tauMvZZq
+share_3: 4-B24DAapk7yjx49+uqxu8FfBQcyIxII3uvrX8wFTDnLT3Y21W80veR2FaRSoihR8RAZxarhdA3LeTpY+2DaTcyFY=
+share_4: 5-N3t2PefVllvaTYVUX7BQ8N0UFuXzPW43vbmEOnKP9m98SVFgH6j20FW4g4Czu1vRGm9OJMsJMZvxPsL94rmgA64=
 Key Name: root_key_encryption
-Key Value: 93a936f02905e38ef36f79d2be8303c567b6db8e75a87428eb222f5cfd8b2719
+Key Value: c2dabdde201c5dd65622675c6b4ef1d584cbbc64a4f19dee2d9bdda279ca20d9
 
 Splitting secret with threshold 3 of 5...
 prime_mod: Af//////////////////////////////////////////////////////////////////////////////////////
-share_0: 1-AR1CmgFw5VLirfCBSnzQTYDknpDMIYaJh5qMBCp5LB/PrEHmOGgQsRXFGtCmpNQUfDLn1uCf044xCaMq8lYM0AGI
-share_1: 2-AeeyE7le62Au+vc7Lb68+RhzDrUyxtj4GsjFXjhZi/RuHIGiLnuLfKJTcj3xBkUVFZqd0uoX9IChxUvKg1ko/JXC
-share_2: 3-iYegiQNFXksXRmbZ+ys1/xC2oGpWLoUdvQ5zYdRPsT6F9WtEcNTE3hA9fUBcijX+b4dWTpqVPYeWYELra4a87eg=
-share_3: 4-AQLDQHBd8003At4ETzIbBDS9llJyz4cwkHdnQ6bpd1ZA6J1Bekfsicj7fI6Up6N3NrGkYQ4ntcTifOCUKo0mEQn4
-share_4: 5-AVNk829u9Szyvb4TjWOMY7l5rctMMuL6cvfPzweZAuN1RHkk0ADSy2MVL3Ht55DYvmD08yi/VhayeMy+QL4G+Onz
+share_0: 1-f8hn9k+6y2Pig5JDMYAvrcKclqarhbcD+Q3ufUbYTfEdi9nbN333x+DybUvBlKoFH9UL27D+YgoZ793Jl0ni2JY=
+share_1: 2-AVDxEzg7RfAFgEnSkpfMO5wfHh9APcpCk0ifrfyvHiWmtBQ8aidVuvxnjfxX9Wm+Q/XF5aKWZHSrl/pbFl8NkxYI
+share_2: 3-nd00KiQD0kk+hPEflhmIL0u5z/7pA9njUeugsp43uIT40VwQMems08gz4YrMuKEh5wTxjhKWnEWsVrFJuH1BHJA=
+share_3: 4-ZozKzAn0ci8dNO3qLGgVZ0hvqOKtMnz0FPHGnxQlBovrwzjNVznNTgLkHORHgVKe85IvniWU2NhXBOBjo5js7C0=
+share_4: 5-qv/XHe0Xz7ccWcjyWrfjRBU/qeuKVivFkbIfwhDmD7uM6dKhl0YcaxeermRlw9K7G22f0s9fKmOYBOhkIGCWhN8=
+
+Formatted JSON (key_names) before writing to key_names.json:
+[
+    "root_key_encryption",
+    "policy_encryption",
+    "key_ursa",
+    "key_major"
+]
+
+Formatted JSON (shares_of_keys_split) before writing to shares_of_keys_split.json:
+[
+    {
+        "prime_mod": "Af//////////////////////////////////////////////////////////////////////////////////////",
+        "required_shares": 3,
+        "shares": [
+            "1-AYcjQ2Y8CiXu6i9WkKSIXye0vpRVXsE5KXF5SES5+U+PLht/OAJhoH4Z1dOc8uKh/qWzRqDy0IfaQtydqO/vkpne",
+            "2-AZtssC1fi7JqPzoilp+jALWoQDYpssmMa5g8yE/5xGy1zRZ2U+iQGsArEJKHKZ/PKYyOSDTiSI1+TQvAozw/cP+H",
+            "3-Zw9/jqC5B6cyUJdFIohK4T/pF7BdTC76pn/hU/GRvdg/VRa3Fu3RLGYRcSHdcOq1GvU49QGaQ09P86AiFlD/ll8=",
+            "4-AeoLsYn/kiWlw3K0nC04Pap7uTjpXkkg1pxCk1ChYUL2hNdgYY16w8LK2G9tDlX0oVDoGOFQxalNS5Q8JX4kPl5k",
+            "5-JGFGH3wXDGXyoHqbv7LZEVuwmdS1wGH/eYTeRgky/BCdnVNTTDbyg1lljWi8TuzuLmbn+c/Kv3g/7ZStc7ktV5k="
+        ]
+    },
+    {
+        "prime_mod": "Af//////////////////////////////////////////////////////////////////////////////////////",
+        "required_shares": 3,
+        "shares": [
+            "1-AfLvTtEOT1Q7k0K/HOHqN2iQdrciV/uxG5NyhxO071zRLfkzm3AupRGceEVuFoMrgrdgj0Caywc3bnIOj6biU0yP",
+            "2-ARkvcdNMdkKTrYQUn+mcVdqdhYvwJQFDXCHzYRQ1ekZiiRI9TTBmxoeSzalH7ktnRYpNMzhf6q6T2EZMySZGZ69h",
+            "3-AZz1nDnwqi0+svUyv01IwLtfXLKgyEYZ8d25x2W0A+/mRq9SRaXfxZIaN1/yuInmqaj8URuzwidLot4f3eKPcIym",
+            "4-AX5BzgT66xQ8o5YZewzveArV/Cs0Qco03MbFuggwjFlcZtByhNCZojEytWludT6prxNt6OqWUXFezjmHzdu9beRf",
+            "5-vRQHNGs4941/ZsjTKJB7yQFj9aqRjZQc3Rc4+6sTgsTpdZ4KsJRcZNxHxbskabBVyaH6pQeYjM1aWISZEdBftow="
+        ]
+    },
+    {
+        "prime_mod": "Af//////////////////////////////////////////////////////////////////////////////////////",
+        "required_shares": 3,
+        "shares": [
+            "1-zF72YHE4f0WrohdRxzaVwPRj1Bwjsu5uCE+Xui2KKq20pt+jlu440hqlFuVYtYu13WJ8gllYYGLw0weLQFJrTts=",
+            "2-AVHfwxLvFmOd2o4orV7e3n37+FG9SVtOCeQBBoAyQLbUE5I0eK7uf0hD0I7cdQI3A2MV8dzeaHQbE2+x/LxxQm3s",
+            "3-Abrkx0isz94+8flrdwArQJpP8dwUoyqDNMt4fYI/U9zWfyZjtHhjC8Swt55IuEdoIcR+kUDIYJ2Mnws0tauMvZZq",
+            "4-B24DAapk7yjx49+uqxu8FfBQcyIxII3uvrX8wFTDnLT3Y21W80veR2FaRSoihR8RAZxarhdA3LeTpY+2DaTcyFY=",
+            "5-N3t2PefVllvaTYVUX7BQ8N0UFuXzPW43vbmEOnKP9m98SVFgH6j20FW4g4Czu1vRGm9OJMsJMZvxPsL94rmgA64="
+        ]
+    },
+    {
+        "prime_mod": "Af//////////////////////////////////////////////////////////////////////////////////////",
+        "required_shares": 3,
+        "shares": [
+            "1-f8hn9k+6y2Pig5JDMYAvrcKclqarhbcD+Q3ufUbYTfEdi9nbN333x+DybUvBlKoFH9UL27D+YgoZ793Jl0ni2JY=",
+            "2-AVDxEzg7RfAFgEnSkpfMO5wfHh9APcpCk0ifrfyvHiWmtBQ8aidVuvxnjfxX9Wm+Q/XF5aKWZHSrl/pbFl8NkxYI",
+            "3-nd00KiQD0kk+hPEflhmIL0u5z/7pA9njUeugsp43uIT40VwQMems08gz4YrMuKEh5wTxjhKWnEWsVrFJuH1BHJA=",
+            "4-ZozKzAn0ci8dNO3qLGgVZ0hvqOKtMnz0FPHGnxQlBovrwzjNVznNTgLkHORHgVKe85IvniWU2NhXBOBjo5js7C0=",
+            "5-qv/XHe0Xz7ccWcjyWrfjRBU/qeuKVivFkbIfwhDmD7uM6dKhl0YcaxeermRlw9K7G22f0s9fKmOYBOhkIGCWhN8="
+        ]
+    }
+]
+KEY_NAMES: ['root_key_encryption', 'policy_encryption', 'key_ursa', 'key_major']
+
+Formatted JSON (shares_of_keys_split) after reading from shares_of_keys_split.json:
+[
+    {
+        "prime_mod": "Af//////////////////////////////////////////////////////////////////////////////////////",
+        "required_shares": 3,
+        "shares": [
+            "1-AYcjQ2Y8CiXu6i9WkKSIXye0vpRVXsE5KXF5SES5+U+PLht/OAJhoH4Z1dOc8uKh/qWzRqDy0IfaQtydqO/vkpne",
+            "2-AZtssC1fi7JqPzoilp+jALWoQDYpssmMa5g8yE/5xGy1zRZ2U+iQGsArEJKHKZ/PKYyOSDTiSI1+TQvAozw/cP+H",
+            "3-Zw9/jqC5B6cyUJdFIohK4T/pF7BdTC76pn/hU/GRvdg/VRa3Fu3RLGYRcSHdcOq1GvU49QGaQ09P86AiFlD/ll8=",
+            "4-AeoLsYn/kiWlw3K0nC04Pap7uTjpXkkg1pxCk1ChYUL2hNdgYY16w8LK2G9tDlX0oVDoGOFQxalNS5Q8JX4kPl5k",
+            "5-JGFGH3wXDGXyoHqbv7LZEVuwmdS1wGH/eYTeRgky/BCdnVNTTDbyg1lljWi8TuzuLmbn+c/Kv3g/7ZStc7ktV5k="
+        ]
+    },
+    {
+        "prime_mod": "Af//////////////////////////////////////////////////////////////////////////////////////",
+        "required_shares": 3,
+        "shares": [
+            "1-AfLvTtEOT1Q7k0K/HOHqN2iQdrciV/uxG5NyhxO071zRLfkzm3AupRGceEVuFoMrgrdgj0Caywc3bnIOj6biU0yP",
+            "2-ARkvcdNMdkKTrYQUn+mcVdqdhYvwJQFDXCHzYRQ1ekZiiRI9TTBmxoeSzalH7ktnRYpNMzhf6q6T2EZMySZGZ69h",
+            "3-AZz1nDnwqi0+svUyv01IwLtfXLKgyEYZ8d25x2W0A+/mRq9SRaXfxZIaN1/yuInmqaj8URuzwidLot4f3eKPcIym",
+            "4-AX5BzgT66xQ8o5YZewzveArV/Cs0Qco03MbFuggwjFlcZtByhNCZojEytWludT6prxNt6OqWUXFezjmHzdu9beRf",
+            "5-vRQHNGs4941/ZsjTKJB7yQFj9aqRjZQc3Rc4+6sTgsTpdZ4KsJRcZNxHxbskabBVyaH6pQeYjM1aWISZEdBftow="
+        ]
+    },
+    {
+        "prime_mod": "Af//////////////////////////////////////////////////////////////////////////////////////",
+        "required_shares": 3,
+        "shares": [
+            "1-zF72YHE4f0WrohdRxzaVwPRj1Bwjsu5uCE+Xui2KKq20pt+jlu440hqlFuVYtYu13WJ8gllYYGLw0weLQFJrTts=",
+            "2-AVHfwxLvFmOd2o4orV7e3n37+FG9SVtOCeQBBoAyQLbUE5I0eK7uf0hD0I7cdQI3A2MV8dzeaHQbE2+x/LxxQm3s",
+            "3-Abrkx0isz94+8flrdwArQJpP8dwUoyqDNMt4fYI/U9zWfyZjtHhjC8Swt55IuEdoIcR+kUDIYJ2Mnws0tauMvZZq",
+            "4-B24DAapk7yjx49+uqxu8FfBQcyIxII3uvrX8wFTDnLT3Y21W80veR2FaRSoihR8RAZxarhdA3LeTpY+2DaTcyFY=",
+            "5-N3t2PefVllvaTYVUX7BQ8N0UFuXzPW43vbmEOnKP9m98SVFgH6j20FW4g4Czu1vRGm9OJMsJMZvxPsL94rmgA64="
+        ]
+    },
+    {
+        "prime_mod": "Af//////////////////////////////////////////////////////////////////////////////////////",
+        "required_shares": 3,
+        "shares": [
+            "1-f8hn9k+6y2Pig5JDMYAvrcKclqarhbcD+Q3ufUbYTfEdi9nbN333x+DybUvBlKoFH9UL27D+YgoZ793Jl0ni2JY=",
+            "2-AVDxEzg7RfAFgEnSkpfMO5wfHh9APcpCk0ifrfyvHiWmtBQ8aidVuvxnjfxX9Wm+Q/XF5aKWZHSrl/pbFl8NkxYI",
+            "3-nd00KiQD0kk+hPEflhmIL0u5z/7pA9njUeugsp43uIT40VwQMems08gz4YrMuKEh5wTxjhKWnEWsVrFJuH1BHJA=",
+            "4-ZozKzAn0ci8dNO3qLGgVZ0hvqOKtMnz0FPHGnxQlBovrwzjNVznNTgLkHORHgVKe85IvniWU2NhXBOBjo5js7C0=",
+            "5-qv/XHe0Xz7ccWcjyWrfjRBU/qeuKVivFkbIfwhDmD7uM6dKhl0YcaxeermRlw9K7G22f0s9fKmOYBOhkIGCWhN8="
+        ]
+    }
+]
 
 Reconstructing key_0...
-Reconstructed key_0: 86a8b31730cb6561a4200c218cd2fba8a528cc5418007eb298053f24a142184e
-Original key_0     : 86a8b31730cb6561a4200c218cd2fba8a528cc5418007eb298053f24a142184e
+Reconstructed key_0: 39964b5303318f7ed23a35425a220fdbd1cdbbf2a4c99c4fd49322c1f731aded
+Original key_0     : 39964b5303318f7ed23a35425a220fdbd1cdbbf2a4c99c4fd49322c1f731aded
 Match: True
 
 Reconstructing key_1...
-Reconstructed key_1: 3fe320f4a919091e62c502c9f8123e854525d0136f119ff00ad88ecfdbbf75b2
-Original key_1     : 3fe320f4a919091e62c502c9f8123e854525d0136f119ff00ad88ecfdbbf75b2
+Reconstructed key_1: 53365b6d12662ee8047a5c0279d2c325d50e7a0774e113a06e4dc16eae1dc3d2
+Original key_1     : 53365b6d12662ee8047a5c0279d2c325d50e7a0774e113a06e4dc16eae1dc3d2
 Match: True
 
 Reconstructing key_2...
-Reconstructed key_2: 02843b3921238a1992a47c69894a9b122f35d896fc919a3b3ad3a2dd132795cc
-Original key_2     : 02843b3921238a1992a47c69894a9b122f35d896fc919a3b3ad3a2dd132795cc
+Reconstructed key_2: ba13616e57d92fc94c121da8d10108cbde50b8b556ccaf93d1190bd755a70897
+Original key_2     : ba13616e57d92fc94c121da8d10108cbde50b8b556ccaf93d1190bd755a70897
 Match: True
 
 Reconstructing key_3...
-Reconstructed key_3: 93a936f02905e38ef36f79d2be8303c567b6db8e75a87428eb222f5cfd8b2719
-Original key_3     : 93a936f02905e38ef36f79d2be8303c567b6db8e75a87428eb222f5cfd8b2719
+Reconstructed key_3: c2dabdde201c5dd65622675c6b4ef1d584cbbc64a4f19dee2d9bdda279ca20d9
+Original key_3     : c2dabdde201c5dd65622675c6b4ef1d584cbbc64a4f19dee2d9bdda279ca20d9
 Match: True
 
 Formatted JSON:
 Key Name: root_key_encryption
-Key Value: 93a936f02905e38ef36f79d2be8303c567b6db8e75a87428eb222f5cfd8b2719
+Key Value: c2dabdde201c5dd65622675c6b4ef1d584cbbc64a4f19dee2d9bdda279ca20d9
 Key Name: policy_encryption
-Key Value: 02843b3921238a1992a47c69894a9b122f35d896fc919a3b3ad3a2dd132795cc
+Key Value: ba13616e57d92fc94c121da8d10108cbde50b8b556ccaf93d1190bd755a70897
 Key Name: key_ursa
-Key Value: 3fe320f4a919091e62c502c9f8123e854525d0136f119ff00ad88ecfdbbf75b2
+Key Value: 53365b6d12662ee8047a5c0279d2c325d50e7a0774e113a06e4dc16eae1dc3d2
 Key Name: key_major
-Key Value: 86a8b31730cb6561a4200c218cd2fba8a528cc5418007eb298053f24a142184e
+Key Value: 39964b5303318f7ed23a35425a220fdbd1cdbbf2a4c99c4fd49322c1f731aded
 {
-    "key_major": "86a8b31730cb6561a4200c218cd2fba8a528cc5418007eb298053f24a142184e",
-    "key_ursa": "3fe320f4a919091e62c502c9f8123e854525d0136f119ff00ad88ecfdbbf75b2",
-    "policy_encryption": "02843b3921238a1992a47c69894a9b122f35d896fc919a3b3ad3a2dd132795cc",
-    "root_key_encryption": "93a936f02905e38ef36f79d2be8303c567b6db8e75a87428eb222f5cfd8b2719"
+    "key_major": "39964b5303318f7ed23a35425a220fdbd1cdbbf2a4c99c4fd49322c1f731aded",
+    "key_ursa": "53365b6d12662ee8047a5c0279d2c325d50e7a0774e113a06e4dc16eae1dc3d2",
+    "policy_encryption": "ba13616e57d92fc94c121da8d10108cbde50b8b556ccaf93d1190bd755a70897",
+    "root_key_encryption": "c2dabdde201c5dd65622675c6b4ef1d584cbbc64a4f19dee2d9bdda279ca20d9"
 }
 
 SHA256(Reconstructed JSON):
-fa852a65ea3cf10f6d1936b08ab0eb781f33c7adb7e06bfbfe7f432a93b2da7f
+fc68cf1b4eda2d6b69181bb2916e0d9695771fc97e547271d9df4ff6fd4cd0b1
 
 ✅ Match with original hash: True
 
