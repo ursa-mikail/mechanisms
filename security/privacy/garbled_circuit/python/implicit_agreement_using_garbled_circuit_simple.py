@@ -61,7 +61,7 @@ print("\n---Decrypt with keys (where '.' is an exception):")
 # Bob passes the cipher_text values (cipher_text00 ... cipher_text11) to Alice, and provides the key for his input. If he says YES, he passes keyX_1, otherwise he will pass keyX_0.
 
 # Alice receives the 4 values, and Bob's key. Now she uses oblivious transfer to gain the key for her answer. If she says YES, we obtain the key for keyY_1, without Bob knowing that he says YES. If she says NO, she gets keyY_0.
-# Alice will have 2 keys and she tries all the ciphers:
+# Alice will have 2 keys and she tries all the ciphers. With only one she can open is the one that matches Bob and Alice's decision.
 
 try:
 	print(Fernet(keyB).decrypt(Fernet(keyA).decrypt(cipher_text00)), end=' ')	
