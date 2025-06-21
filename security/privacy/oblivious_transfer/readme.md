@@ -1,9 +1,39 @@
 # Oblivious Transfer 
 
+🧠 Scenario: Private Model Access
+Suppose a user (Bob) wants to query a machine learning model (held by Alice) but doesn't want to reveal which part of the model they are querying. Meanwhile, the model owner (Alice) wants to ensure the user only learns the result of that single query, and not the whole model.
+
+**Example Use Case**:
+Imagine a hospital wants to query a cloud-hosted AI model to predict disease risk from genomic markers, but doesn't want to expose which genetic marker they’re querying due to patient privacy.
+
 ## 1-out-of-2
 
+🔐 How this Code Enables That:
+- Alice prepares encrypted responses for all possible queries.
+- Bob chooses 1 index c (e.g., corresponding to a neural net weight or a genomic marker) and engages in OT using this protocol.
+
+- Using the OT process:
+	- Bob can decrypt only the response corresponding to the chosen query.
+	- Alice does not know which query Bob made.
+- This keeps both model privacy (Alice’s weights are hidden) and query privacy (Bob’s interest is private).
+
+**Caveat(s)**
+- Alice must remember what Bob had asked for, the pairs or N clusters of request, must not repeat. Hence, Bob has to segment the request, and only able to obtain 1 of each sessional request. 
+
+| **Need**                             | **This Protocol Provides**                  |
+| ------------------------------------ | ------------------------------------------- |
+| Secure access to proprietary models  | Only selected parts of model are revealed   |
+| Privacy-preserving inference         | User query remains hidden from the model    |
+| Fairness in federated learning       | Prevents data leakage during local training |
+| Confidential multi-party computation | Key in private ML collaboration             |
+
+🚀 Extensions in Practice:
+- Integrate with Secure Multi-Party Computation (SMPC) or Homomorphic Encryption frameworks like Microsoft SEAL or TF Encrypted.
+- Used in federated learning settings with TensorFlow Federated or PySyft.
+- Can support Zero-Knowledge Proof-based model access.
+
 ✅ AI/ML Use Case Scenario:
-Alice owns a model and produces two possible outputs (e.g., prediction for disease A and prediction for disease B).
+Alice owns a model and produces 2 possible outputs (e.g., prediction for disease A and prediction for disease B).
 
 Bob wants only 1 of these outputs privately.
 
