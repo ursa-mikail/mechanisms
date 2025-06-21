@@ -27,7 +27,7 @@ Add ZK Proofs to verify the query was valid (optional, for higher security).
 
 ## 1-out-of-N
 
-Scaling to 1-out-of-n Oblivious Transfer (OT) means Bob can privately choose one of many model outputs (e.g., $$/ 𝑚_0 , 𝑚_1 , … , 𝑚_{𝑛 − 1}​ /$$ ), and learn only that one, without Alice knowing which, and without Bob learning the others.
+Scaling to 1-out-of-n Oblivious Transfer (OT) means Bob can privately choose one of many model outputs (e.g., /$$ 𝑚_0 , 𝑚_1 , … , 𝑚_{𝑛 − 1}​ $$/ ), and learn only that one, without Alice knowing which, and without Bob learning the others.
 
 🔐 Approach: 1-out-of-n OT via Diffie-Hellman-style keys
 Extend the current OT scheme by using:
