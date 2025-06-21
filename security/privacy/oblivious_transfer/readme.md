@@ -49,10 +49,8 @@ Simulate a simplified version of 1-out-of-n OT:
 | **Bob**   | Decrypts only his selected message using shared secret $g^{ar}$  |
 
 🧪 Applications:
-Privacy-preserving model APIs (e.g. only 1 feature/prediction retrieved)
-
-Federated learning where clients selectively pull model updates
-
-Secure inference in healthcare and finance
+- Privacy-preserving model APIs (e.g. only 1 feature/prediction retrieved)
+- Federated learning where clients selectively pull model updates
+- Secure inference in healthcare and finance
 
 
