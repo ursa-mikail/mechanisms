@@ -13,7 +13,7 @@ Post-compromise: The **Diffie-Hellman ratchet** to reset the session secures aga
 Derive $$ DH(RK_a, RK_b) $$ as symmetric key.
 
 To reset the session, either or both ... 
-- Bob can introduce a new key pair $$ RK_b' $$.
-- Alice can introduce a new key pair $$ RK_a' $$.
+- Bob can introduce a new key pair $$/ RK_b' /$$.
+- Alice can introduce a new key pair $$/ RK_a' /$$.
 
 
