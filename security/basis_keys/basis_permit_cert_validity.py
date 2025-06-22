@@ -1,11 +1,20 @@
 from cryptography.x509 import load_pem_x509_certificate
 
-def days_left_on_cert(cert_pem: str) -> int:
+def days_left_on_cert(cert_pem: str, warn_threshold: int = 30) -> int:
     cert = load_pem_x509_certificate(cert_pem.encode())
     expiry = cert.not_valid_after_utc
     now = datetime.utcnow().replace(tzinfo=expiry.tzinfo)
     delta = expiry - now
-    return delta.days
+    days_left = delta.days
+
+    if days_left < 0:
+        raise ValueError(f"❌ Certificate expired {-days_left} days ago on {expiry.date()}")
+    elif days_left <= warn_threshold:
+        print(f"⚠️  Certificate expires in {days_left} day(s) on {expiry.date()} — consider renewal.")
+    else:
+        print(f"✅ Certificate is valid for {days_left} more day(s) (until {expiry.date()})")
+
+    return days_left
 
 def display_usage_policies(permit: dict):
     print("\n📋 KEY USAGE POLICIES:")
@@ -26,6 +35,13 @@ if __name__ == "__main__":
     days_left = days_left_on_cert(cert_pem)
     print(f"\n📆 Certificate validity: {days_left} days remaining")
 
+    try:
+        days_left = days_left_on_cert(cert_pem, warn_threshold=30)
+    except ValueError as e:
+        print(str(e))
+        exit(1)  # or handle differently
+
+
     # Display usage policies
     display_usage_policies(permit)
 
@@ -35,8 +51,12 @@ if __name__ == "__main__":
     result = verify_permit(permit)
     print("\nResult:", "Valid" if result else "Invalid")
 
+
 """
+✅ Certificate is valid for 699 more day(s) (until 2027-05-23)
+
 📆 Certificate validity: 699 days remaining
+✅ Certificate is valid for 699 more day(s) (until 2027-05-23)
 
 📋 KEY USAGE POLICIES:
 
