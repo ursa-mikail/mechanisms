@@ -10,10 +10,10 @@ Post-compromise: The **Diffie-Hellman ratchet** to reset the session secures aga
 
 ![ratchet_dh](https://github.com/ursa-mikail/mechanisms/blob/main/security/double_ratchet/ratchet_dh.svg)
 
-Derive $$ DH(RK_a, RK_b) $$ as symmetric key.
+Derive $$\ DH(RK_a, RK_b) \$$ as symmetric key.
 
 To reset the session, either or both ... 
-- Bob can introduce a new key pair $$/ RK_b' /$$.
-- Alice can introduce a new key pair $$/ RK_a' /$$.
+- Bob can introduce a new key pair $$\ RK_b' \$$.
+- Alice can introduce a new key pair $$\ RK_a' \$$.
 
 
