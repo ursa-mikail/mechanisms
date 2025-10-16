@@ -1,0 +1,1609 @@
+{
+  "total_size": 104857600,
+  "original_sha256": "e7dfd9de761c372bc7f9dd85927e95cde0e985ed2c11221b601eafe2c17a62f7",
+  "chunk_count": 100,
+  "chunk_size": 1048576,
+  "file_size_mb": 100,
+  "nodes": [
+    {
+      "node_id": "2879ffb4608e96a3",
+      "prev": null,
+      "next": "36e6b718d15d33ad",
+      "permit": {
+        "algo": "AES-GCM",
+        "key_hex": "076174bbdadff414672498c5d634400d2e9b1f285f2d0fdb14d0dc2e2b4cf3e5",
+        "used_bytes": 1048576,
+        "max_bytes": 68719476736,
+        "domains": [
+          "chunk_00.dat"
+        ],
+        "revoked": false,
+        "timestamp": 4313094.01
+      }
+    },
+    {
+      "node_id": "36e6b718d15d33ad",
+      "prev": "2879ffb4608e96a3",
+      "next": "cf363aa5daad61e0",
+      "permit": {
+        "algo": "AES-GCM",
+        "key_hex": "8925630bece53c5b33372fcf7daa28faa1477b7f4ab9b82ba619883680429b29",
+        "used_bytes": 1048576,
+        "max_bytes": 68719476736,
+        "domains": [
+          "chunk_01.dat"
+        ],
+        "revoked": false,
+        "timestamp": 4313095.01
+      }
+    },
+    {
+      "node_id": "cf363aa5daad61e0",
+      "prev": "36e6b718d15d33ad",
+      "next": "1199c6786e39e08e",
+      "permit": {
+        "algo": "AES-GCM",
+        "key_hex": "b188dd32afc6415d04c71cd0f330ce27da3d5806de6d9504f9c2de99e231ee4d",
+        "used_bytes": 1048576,
+        "max_bytes": 68719476736,
+        "domains": [
+          "chunk_02.dat"
+        ],
+        "revoked": false,
+        "timestamp": 4313096.01
+      }
+    },
+    {
+      "node_id": "1199c6786e39e08e",
+      "prev": "cf363aa5daad61e0",
+      "next": "6f160d56f37b3cf4",
+      "permit": {
+        "algo": "AES-GCM",
+        "key_hex": "4dbdef3e735f79023a51b576842caebdbdf45c1ddd281c270a5cbe6c93512a41",
+        "used_bytes": 1048576,
+        "max_bytes": 68719476736,
+        "domains": [
+          "chunk_03.dat"
+        ],
+        "revoked": false,
+        "timestamp": 4313097.01
+      }
+    },
+    {
+      "node_id": "6f160d56f37b3cf4",
+      "prev": "1199c6786e39e08e",
+      "next": "80563905f5b97641",
+      "permit": {
+        "algo": "AES-GCM",
+        "key_hex": "bb72d9456807d1ced9d6bfebd86947b935ccb974aace3cb54e0101bfbe51b0ca",
+        "used_bytes": 1048576,
+        "max_bytes": 68719476736,
+        "domains": [
+          "chunk_04.dat"
+        ],
+        "revoked": false,
+        "timestamp": 4313098.01
+      }
+    },
+    {
+      "node_id": "80563905f5b97641",
+      "prev": "6f160d56f37b3cf4",
+      "next": "b3eb7cf8773091c3",
+      "permit": {
+        "algo": "AES-GCM",
+        "key_hex": "ad6a6d37b1fbc9318fede1f99099443decbac702886e0fd9be6ecb1f84d82612",
+        "used_bytes": 1048576,
+        "max_bytes": 68719476736,
+        "domains": [
+          "chunk_05.dat"
+        ],
+        "revoked": false,
+        "timestamp": 4313099.01
+      }
+    },
+    {
+      "node_id": "b3eb7cf8773091c3",
+      "prev": "80563905f5b97641",
+      "next": "6acbee0a759e39b5",
+      "permit": {
+        "algo": "AES-GCM",
+        "key_hex": "922907e6b73816d446f734378b97536a3709ac88eb1bd32775d66128b5a907f5",
+        "used_bytes": 1048576,
+        "max_bytes": 68719476736,
+        "domains": [
+          "chunk_06.dat"
+        ],
+        "revoked": false,
+        "timestamp": 4313100.01
+      }
+    },
+    {
+      "node_id": "6acbee0a759e39b5",
+      "prev": "b3eb7cf8773091c3",
+      "next": "c88f49212b88262e",
+      "permit": {
+        "algo": "AES-GCM",
+        "key_hex": "550a3ddfb9b92b590be6bf3caddf9d970f9d11425d08f4d03bc1fe3710d65aa5",
+        "used_bytes": 1048576,
+        "max_bytes": 68719476736,
+        "domains": [
+          "chunk_07.dat"
+        ],
+        "revoked": false,
+        "timestamp": 4313101.01
+      }
+    },
+    {
+      "node_id": "c88f49212b88262e",
+      "prev": "6acbee0a759e39b5",
+      "next": "745de1fd3ef56d80",
+      "permit": {
+        "algo": "AES-GCM",
+        "key_hex": "f8784311261d2c010da9aa72d63d5e8d627a6be514b6a2abbc3d82cd257e6d47",
+        "used_bytes": 1048576,
+        "max_bytes": 68719476736,
+        "domains": [
+          "chunk_08.dat"
+        ],
+        "revoked": false,
+        "timestamp": 4313102.01
+      }
+    },
+    {
+      "node_id": "745de1fd3ef56d80",
+      "prev": "c88f49212b88262e",
+      "next": "6121f0d10d4feb8f",
+      "permit": {
+        "algo": "AES-GCM",
+        "key_hex": "00e9d2d5843c8247f134f3f7c5cd4d96085da2d58344a2635ec4dea64d23e57e",
+        "used_bytes": 1048576,
+        "max_bytes": 68719476736,
+        "domains": [
+          "chunk_09.dat"
+        ],
+        "revoked": false,
+        "timestamp": 4313103.01
+      }
+    },
+    {
+      "node_id": "6121f0d10d4feb8f",
+      "prev": "745de1fd3ef56d80",
+      "next": "ea9ffdfcf811b998",
+      "permit": {
+        "algo": "AES-GCM",
+        "key_hex": "b3390dc84010647f2e1ef1fbf090019b933881db90c2376150b07d3ee899c88d",
+        "used_bytes": 1048576,
+        "max_bytes": 68719476736,
+        "domains": [
+          "chunk_10.dat"
+        ],
+        "revoked": false,
+        "timestamp": 4313104.01
+      }
+    },
+    {
+      "node_id": "ea9ffdfcf811b998",
+      "prev": "6121f0d10d4feb8f",
+      "next": "ce8dba6bf491a2ee",
+      "permit": {
+        "algo": "AES-GCM",
+        "key_hex": "bc20b8fe54229e5749ce4c25ebf93495ad210ace633ec57d795bb518394deb2a",
+        "used_bytes": 1048576,
+        "max_bytes": 68719476736,
+        "domains": [
+          "chunk_11.dat"
+        ],
+        "revoked": false,
+        "timestamp": 4313105.01
+      }
+    },
+    {
+      "node_id": "ce8dba6bf491a2ee",
+      "prev": "ea9ffdfcf811b998",
+      "next": "2cb03ae328a87500",
+      "permit": {
+        "algo": "AES-GCM",
+        "key_hex": "2508f6152180d051987aad95cf8aa2ad6de3d86da95c4ad5067c814cdc458669",
+        "used_bytes": 1048576,
+        "max_bytes": 68719476736,
+        "domains": [
+          "chunk_12.dat"
+        ],
+        "revoked": false,
+        "timestamp": 4313106.01
+      }
+    },
+    {
+      "node_id": "2cb03ae328a87500",
+      "prev": "ce8dba6bf491a2ee",
+      "next": "c22d9abbb6e58666",
+      "permit": {
+        "algo": "AES-GCM",
+        "key_hex": "b979fbed512f9d9ea9776263394b96219ba81508511d785a1a22f0ef4bd2c135",
+        "used_bytes": 1048576,
+        "max_bytes": 68719476736,
+        "domains": [
+          "chunk_13.dat"
+        ],
+        "revoked": false,
+        "timestamp": 4313107.01
+      }
+    },
+    {
+      "node_id": "c22d9abbb6e58666",
+      "prev": "2cb03ae328a87500",
+      "next": "ccdb85ad31ffb76a",
+      "permit": {
+        "algo": "AES-GCM",
+        "key_hex": "5cf8e925609fe2c2e8f5aed599d666d19e27c7d5300964dc1774e38e68e8ffda",
+        "used_bytes": 1048576,
+        "max_bytes": 68719476736,
+        "domains": [
+          "chunk_14.dat"
+        ],
+        "revoked": false,
+        "timestamp": 4313108.01
+      }
+    },
+    {
+      "node_id": "ccdb85ad31ffb76a",
+      "prev": "c22d9abbb6e58666",
+      "next": "5867c196b46addb3",
+      "permit": {
+        "algo": "AES-GCM",
+        "key_hex": "790b938ac2462976a4083519129cce2b219f0177621f08a4a6cad82cb6b17856",
+        "used_bytes": 1048576,
+        "max_bytes": 68719476736,
+        "domains": [
+          "chunk_15.dat"
+        ],
+        "revoked": false,
+        "timestamp": 4313109.01
+      }
+    },
+    {
+      "node_id": "5867c196b46addb3",
+      "prev": "ccdb85ad31ffb76a",
+      "next": "b656d35c7da480e8",
+      "permit": {
+        "algo": "AES-GCM",
+        "key_hex": "c595752835a840e5570bf3095c3fe34c5ab2a9072af721412f84ee6ab886ac2b",
+        "used_bytes": 1048576,
+        "max_bytes": 68719476736,
+        "domains": [
+          "chunk_16.dat"
+        ],
+        "revoked": false,
+        "timestamp": 4313110.01
+      }
+    },
+    {
+      "node_id": "b656d35c7da480e8",
+      "prev": "5867c196b46addb3",
+      "next": "7595a8cf9c693642",
+      "permit": {
+        "algo": "AES-GCM",
+        "key_hex": "576415529d5e4fd76b9732af54a766a17ab2835e42844da570508b2aadee7104",
+        "used_bytes": 1048576,
+        "max_bytes": 68719476736,
+        "domains": [
+          "chunk_17.dat"
+        ],
+        "revoked": false,
+        "timestamp": 4313111.01
+      }
+    },
+    {
+      "node_id": "7595a8cf9c693642",
+      "prev": "b656d35c7da480e8",
+      "next": "04e42f24cfc41c07",
+      "permit": {
+        "algo": "AES-GCM",
+        "key_hex": "5cf2f5db855e61af3beaa2c8b97219b21ac8d310351b65adcc0450878f3f8f43",
+        "used_bytes": 1048576,
+        "max_bytes": 68719476736,
+        "domains": [
+          "chunk_18.dat"
+        ],
+        "revoked": false,
+        "timestamp": 4313112.01
+      }
+    },
+    {
+      "node_id": "04e42f24cfc41c07",
+      "prev": "7595a8cf9c693642",
+      "next": "23bea9996111bffd",
+      "permit": {
+        "algo": "AES-GCM",
+        "key_hex": "48a109f7c5a72c07c364926fae475883e58c83631173b1cb6e8ae584e460c392",
+        "used_bytes": 1048576,
+        "max_bytes": 68719476736,
+        "domains": [
+          "chunk_19.dat"
+        ],
+        "revoked": false,
+        "timestamp": 4313113.01
+      }
+    },
+    {
+      "node_id": "23bea9996111bffd",
+      "prev": "04e42f24cfc41c07",
+      "next": "aeac0341f8445c6b",
+      "permit": {
+        "algo": "AES-GCM",
+        "key_hex": "3cb6798bec15837034c263ce366e5d214225abb66badffc7752572e45d3aa215",
+        "used_bytes": 1048576,
+        "max_bytes": 68719476736,
+        "domains": [
+          "chunk_20.dat"
+        ],
+        "revoked": false,
+        "timestamp": 4313114.01
+      }
+    },
+    {
+      "node_id": "aeac0341f8445c6b",
+      "prev": "23bea9996111bffd",
+      "next": "411daf1046f9b1c4",
+      "permit": {
+        "algo": "AES-GCM",
+        "key_hex": "704c9ee85b00c78ad5c0bc167d3efa7cdc1992ff7682be1d30c3312f9350f2cd",
+        "used_bytes": 1048576,
+        "max_bytes": 68719476736,
+        "domains": [
+          "chunk_21.dat"
+        ],
+        "revoked": false,
+        "timestamp": 4313115.01
+      }
+    },
+    {
+      "node_id": "411daf1046f9b1c4",
+      "prev": "aeac0341f8445c6b",
+      "next": "199ee33fb96f2e16",
+      "permit": {
+        "algo": "AES-GCM",
+        "key_hex": "144e2eb7d974147db04cb6b3a1bdd8e7de79c9c4a9589cb3421829c54fb0d86b",
+        "used_bytes": 1048576,
+        "max_bytes": 68719476736,
+        "domains": [
+          "chunk_22.dat"
+        ],
+        "revoked": false,
+        "timestamp": 4313116.01
+      }
+    },
+    {
+      "node_id": "199ee33fb96f2e16",
+      "prev": "411daf1046f9b1c4",
+      "next": "dae4fccf37955104",
+      "permit": {
+        "algo": "AES-GCM",
+        "key_hex": "df37c3b85df6fb6178fc23988b09048c81df3140470cf6a20313dae089bb3fc7",
+        "used_bytes": 1048576,
+        "max_bytes": 68719476736,
+        "domains": [
+          "chunk_23.dat"
+        ],
+        "revoked": false,
+        "timestamp": 4313117.01
+      }
+    },
+    {
+      "node_id": "dae4fccf37955104",
+      "prev": "199ee33fb96f2e16",
+      "next": "144074f35438954c",
+      "permit": {
+        "algo": "AES-GCM",
+        "key_hex": "217d371269f74a5ed50bb04504439305f9bc85e1feaaacc570bf9613980c8691",
+        "used_bytes": 1048576,
+        "max_bytes": 68719476736,
+        "domains": [
+          "chunk_24.dat"
+        ],
+        "revoked": false,
+        "timestamp": 4313118.01
+      }
+    },
+    {
+      "node_id": "144074f35438954c",
+      "prev": "dae4fccf37955104",
+      "next": "0508b798d44d0f87",
+      "permit": {
+        "algo": "AES-GCM",
+        "key_hex": "bd17c0d0b2ca1b79a3904c92db639807c0521a8cf3fb2ff25e9afb154074df88",
+        "used_bytes": 1048576,
+        "max_bytes": 68719476736,
+        "domains": [
+          "chunk_25.dat"
+        ],
+        "revoked": false,
+        "timestamp": 4313119.01
+      }
+    },
+    {
+      "node_id": "0508b798d44d0f87",
+      "prev": "144074f35438954c",
+      "next": "68229d798562f809",
+      "permit": {
+        "algo": "AES-GCM",
+        "key_hex": "0486d9e71ae83cd0c4c3e0f628ff2d832c23ba664a0a6d016ef8bf706af1c84c",
+        "used_bytes": 1048576,
+        "max_bytes": 68719476736,
+        "domains": [
+          "chunk_26.dat"
+        ],
+        "revoked": false,
+        "timestamp": 4313120.01
+      }
+    },
+    {
+      "node_id": "68229d798562f809",
+      "prev": "0508b798d44d0f87",
+      "next": "a9d3075a802137e4",
+      "permit": {
+        "algo": "AES-GCM",
+        "key_hex": "ff9657c18e05ed654074e468b8769c4e519d16a5c03275bd94d75ecb54072acf",
+        "used_bytes": 1048576,
+        "max_bytes": 68719476736,
+        "domains": [
+          "chunk_27.dat"
+        ],
+        "revoked": false,
+        "timestamp": 4313121.01
+      }
+    },
+    {
+      "node_id": "a9d3075a802137e4",
+      "prev": "68229d798562f809",
+      "next": "f3979a8c2ac17721",
+      "permit": {
+        "algo": "AES-GCM",
+        "key_hex": "69d8c96691f80b126ed46dd40f7f00eda4a595b177491a99295d895352751a52",
+        "used_bytes": 1048576,
+        "max_bytes": 68719476736,
+        "domains": [
+          "chunk_28.dat"
+        ],
+        "revoked": false,
+        "timestamp": 4313122.01
+      }
+    },
+    {
+      "node_id": "f3979a8c2ac17721",
+      "prev": "a9d3075a802137e4",
+      "next": "ae4cd54406d053aa",
+      "permit": {
+        "algo": "AES-GCM",
+        "key_hex": "f91606aedafd25f15fb9b2470034406314413eb08cde59546819d388b21a9028",
+        "used_bytes": 1048576,
+        "max_bytes": 68719476736,
+        "domains": [
+          "chunk_29.dat"
+        ],
+        "revoked": false,
+        "timestamp": 4313123.01
+      }
+    },
+    {
+      "node_id": "ae4cd54406d053aa",
+      "prev": "f3979a8c2ac17721",
+      "next": "a3cf1e8bdfe65776",
+      "permit": {
+        "algo": "AES-GCM",
+        "key_hex": "bfc37b665e3ca640c3f5255c05518521c761db1dd96c3ebbedde5cf299e3ceaf",
+        "used_bytes": 1048576,
+        "max_bytes": 68719476736,
+        "domains": [
+          "chunk_30.dat"
+        ],
+        "revoked": false,
+        "timestamp": 4313124.01
+      }
+    },
+    {
+      "node_id": "a3cf1e8bdfe65776",
+      "prev": "ae4cd54406d053aa",
+      "next": "7a6c703866431d92",
+      "permit": {
+        "algo": "AES-GCM",
+        "key_hex": "263771f36c22c5c3732c3313f6f8ce19adb1cb9706c7e08e72f86a8f4e16a185",
+        "used_bytes": 1048576,
+        "max_bytes": 68719476736,
+        "domains": [
+          "chunk_31.dat"
+        ],
+        "revoked": false,
+        "timestamp": 4313125.01
+      }
+    },
+    {
+      "node_id": "7a6c703866431d92",
+      "prev": "a3cf1e8bdfe65776",
+      "next": "20e13a81d026fc8b",
+      "permit": {
+        "algo": "AES-GCM",
+        "key_hex": "e0d0527547609b6459df328a86fd2302bf35799cbea99d86b6e68850b8eaa140",
+        "used_bytes": 1048576,
+        "max_bytes": 68719476736,
+        "domains": [
+          "chunk_32.dat"
+        ],
+        "revoked": false,
+        "timestamp": 4313126.01
+      }
+    },
+    {
+      "node_id": "20e13a81d026fc8b",
+      "prev": "7a6c703866431d92",
+      "next": "36339290ca98da83",
+      "permit": {
+        "algo": "AES-GCM",
+        "key_hex": "9881eb030ec6856464a96f64f599e25781db8b8b900fd638bdef8c9c26704895",
+        "used_bytes": 1048576,
+        "max_bytes": 68719476736,
+        "domains": [
+          "chunk_33.dat"
+        ],
+        "revoked": false,
+        "timestamp": 4313127.01
+      }
+    },
+    {
+      "node_id": "36339290ca98da83",
+      "prev": "20e13a81d026fc8b",
+      "next": "d85c4bb4e4f483d6",
+      "permit": {
+        "algo": "AES-GCM",
+        "key_hex": "5b0537c9a3bf99a0eee8c440ae08af9d569e15eb593466340d52963369836533",
+        "used_bytes": 1048576,
+        "max_bytes": 68719476736,
+        "domains": [
+          "chunk_34.dat"
+        ],
+        "revoked": false,
+        "timestamp": 4313128.01
+      }
+    },
+    {
+      "node_id": "d85c4bb4e4f483d6",
+      "prev": "36339290ca98da83",
+      "next": "989f17c7953f748a",
+      "permit": {
+        "algo": "AES-GCM",
+        "key_hex": "06281bb6c1720dd17b0aad5e9cf5bd853a0c9582752c0e8fc53bd1b2e1c4a38a",
+        "used_bytes": 1048576,
+        "max_bytes": 68719476736,
+        "domains": [
+          "chunk_35.dat"
+        ],
+        "revoked": false,
+        "timestamp": 4313129.01
+      }
+    },
+    {
+      "node_id": "989f17c7953f748a",
+      "prev": "d85c4bb4e4f483d6",
+      "next": "edfe270fafa75f50",
+      "permit": {
+        "algo": "AES-GCM",
+        "key_hex": "0f97cf76dd78ebc23c0d9c51ce627bf2c424e3790b1d27e3249d89958505d768",
+        "used_bytes": 1048576,
+        "max_bytes": 68719476736,
+        "domains": [
+          "chunk_36.dat"
+        ],
+        "revoked": false,
+        "timestamp": 4313130.01
+      }
+    },
+    {
+      "node_id": "edfe270fafa75f50",
+      "prev": "989f17c7953f748a",
+      "next": "5d998111babc263e",
+      "permit": {
+        "algo": "AES-GCM",
+        "key_hex": "c7854885c34fb3ed792fa39021cb00d85a4ec4680bbe5758e294b511aadc67b9",
+        "used_bytes": 1048576,
+        "max_bytes": 68719476736,
+        "domains": [
+          "chunk_37.dat"
+        ],
+        "revoked": false,
+        "timestamp": 4313131.01
+      }
+    },
+    {
+      "node_id": "5d998111babc263e",
+      "prev": "edfe270fafa75f50",
+      "next": "b8dc5bb45415b10e",
+      "permit": {
+        "algo": "AES-GCM",
+        "key_hex": "a2a9d9a9803fb39fe779005aa0dcc4dbdb3f721b0be1abb3dbef22ee3678cb2b",
+        "used_bytes": 1048576,
+        "max_bytes": 68719476736,
+        "domains": [
+          "chunk_38.dat"
+        ],
+        "revoked": false,
+        "timestamp": 4313132.01
+      }
+    },
+    {
+      "node_id": "b8dc5bb45415b10e",
+      "prev": "5d998111babc263e",
+      "next": "f73572c2cf58fb0e",
+      "permit": {
+        "algo": "AES-GCM",
+        "key_hex": "1b7520581e1f1401a0320e15ac99912d7ba7be9ee22ea5cca6a283f5728df278",
+        "used_bytes": 1048576,
+        "max_bytes": 68719476736,
+        "domains": [
+          "chunk_39.dat"
+        ],
+        "revoked": false,
+        "timestamp": 4313133.01
+      }
+    },
+    {
+      "node_id": "f73572c2cf58fb0e",
+      "prev": "b8dc5bb45415b10e",
+      "next": "cb845b7807ecbb25",
+      "permit": {
+        "algo": "AES-GCM",
+        "key_hex": "011ee2aedddf181ebce27cbf4eba38b70ce61b472e8b8802d55e103337d4dd21",
+        "used_bytes": 1048576,
+        "max_bytes": 68719476736,
+        "domains": [
+          "chunk_40.dat"
+        ],
+        "revoked": false,
+        "timestamp": 4313134.01
+      }
+    },
+    {
+      "node_id": "cb845b7807ecbb25",
+      "prev": "f73572c2cf58fb0e",
+      "next": "f6a4aab512f79ead",
+      "permit": {
+        "algo": "AES-GCM",
+        "key_hex": "afa75f5088de4eb57d3078705e4eb74cb3927a0426bd43622fefc2ae3cdba650",
+        "used_bytes": 1048576,
+        "max_bytes": 68719476736,
+        "domains": [
+          "chunk_41.dat"
+        ],
+        "revoked": false,
+        "timestamp": 4313135.01
+      }
+    },
+    {
+      "node_id": "f6a4aab512f79ead",
+      "prev": "cb845b7807ecbb25",
+      "next": "6f99fba6c1d8e929",
+      "permit": {
+        "algo": "AES-GCM",
+        "key_hex": "b14cd1a0011b3ab4c4529c20fc5f294d49b579adb7270137e8df6f79b7696fe7",
+        "used_bytes": 1048576,
+        "max_bytes": 68719476736,
+        "domains": [
+          "chunk_42.dat"
+        ],
+        "revoked": false,
+        "timestamp": 4313136.01
+      }
+    },
+    {
+      "node_id": "6f99fba6c1d8e929",
+      "prev": "f6a4aab512f79ead",
+      "next": "678d0c646f2130ed",
+      "permit": {
+        "algo": "AES-GCM",
+        "key_hex": "f2f751e319daf0d116811a07dbdfb7de14e4c30f0b7b5f148307614d320936c1",
+        "used_bytes": 1048576,
+        "max_bytes": 68719476736,
+        "domains": [
+          "chunk_43.dat"
+        ],
+        "revoked": false,
+        "timestamp": 4313137.01
+      }
+    },
+    {
+      "node_id": "678d0c646f2130ed",
+      "prev": "6f99fba6c1d8e929",
+      "next": "db07e8dc69480e64",
+      "permit": {
+        "algo": "AES-GCM",
+        "key_hex": "533aeba65415004c164b306ee634e3cd1e353ceb34d4bceaa53d2871624c150f",
+        "used_bytes": 1048576,
+        "max_bytes": 68719476736,
+        "domains": [
+          "chunk_44.dat"
+        ],
+        "revoked": false,
+        "timestamp": 4313138.01
+      }
+    },
+    {
+      "node_id": "db07e8dc69480e64",
+      "prev": "678d0c646f2130ed",
+      "next": "82c8bb811d444cb0",
+      "permit": {
+        "algo": "AES-GCM",
+        "key_hex": "4323ab5e37be405b35daf0fb619060da53e1d671be0735ad0fb052799303f777",
+        "used_bytes": 1048576,
+        "max_bytes": 68719476736,
+        "domains": [
+          "chunk_45.dat"
+        ],
+        "revoked": false,
+        "timestamp": 4313139.01
+      }
+    },
+    {
+      "node_id": "82c8bb811d444cb0",
+      "prev": "db07e8dc69480e64",
+      "next": "4b686d1dd6d9bb73",
+      "permit": {
+        "algo": "AES-GCM",
+        "key_hex": "e1604b34bb4b189d4855c3c0236bac9255736e3e1151f8f410492889764e84b4",
+        "used_bytes": 1048576,
+        "max_bytes": 68719476736,
+        "domains": [
+          "chunk_46.dat"
+        ],
+        "revoked": false,
+        "timestamp": 4313140.01
+      }
+    },
+    {
+      "node_id": "4b686d1dd6d9bb73",
+      "prev": "82c8bb811d444cb0",
+      "next": "c8104d3d69eb7c01",
+      "permit": {
+        "algo": "AES-GCM",
+        "key_hex": "02fa224203c5e88406acc3ff3943c37e95b7e36b3e1726a6fa6385d8f27ca686",
+        "used_bytes": 1048576,
+        "max_bytes": 68719476736,
+        "domains": [
+          "chunk_47.dat"
+        ],
+        "revoked": false,
+        "timestamp": 4313141.01
+      }
+    },
+    {
+      "node_id": "c8104d3d69eb7c01",
+      "prev": "4b686d1dd6d9bb73",
+      "next": "f11bf2767fd9e80b",
+      "permit": {
+        "algo": "AES-GCM",
+        "key_hex": "47a03ab2423bd24ab9ab474e5878f37f016e4bafaf73415c942a43c94db04f65",
+        "used_bytes": 1048576,
+        "max_bytes": 68719476736,
+        "domains": [
+          "chunk_48.dat"
+        ],
+        "revoked": false,
+        "timestamp": 4313142.01
+      }
+    },
+    {
+      "node_id": "f11bf2767fd9e80b",
+      "prev": "c8104d3d69eb7c01",
+      "next": "db72f0652dd3c09d",
+      "permit": {
+        "algo": "AES-GCM",
+        "key_hex": "1ddb751d84723c023a4529d5dc1cc315c14417e8642a9229dc42b6d804a6d744",
+        "used_bytes": 1048576,
+        "max_bytes": 68719476736,
+        "domains": [
+          "chunk_49.dat"
+        ],
+        "revoked": false,
+        "timestamp": 4313143.01
+      }
+    },
+    {
+      "node_id": "db72f0652dd3c09d",
+      "prev": "f11bf2767fd9e80b",
+      "next": "199af8fa2b6afc07",
+      "permit": {
+        "algo": "AES-GCM",
+        "key_hex": "4577327d56629c3c91e5b5d6d44d5aeb2cbdc394eb241fa8265e8bb8916663ac",
+        "used_bytes": 1048576,
+        "max_bytes": 68719476736,
+        "domains": [
+          "chunk_50.dat"
+        ],
+        "revoked": false,
+        "timestamp": 4313144.01
+      }
+    },
+    {
+      "node_id": "199af8fa2b6afc07",
+      "prev": "db72f0652dd3c09d",
+      "next": "86d2a6cfb8bf4953",
+      "permit": {
+        "algo": "AES-GCM",
+        "key_hex": "a9c63a87c0b2a08136c65ff146bdbaf4455cb28a1546331151afaf1332a4de4d",
+        "used_bytes": 1048576,
+        "max_bytes": 68719476736,
+        "domains": [
+          "chunk_51.dat"
+        ],
+        "revoked": false,
+        "timestamp": 4313145.01
+      }
+    },
+    {
+      "node_id": "86d2a6cfb8bf4953",
+      "prev": "199af8fa2b6afc07",
+      "next": "9fd1bafeb2c4bd34",
+      "permit": {
+        "algo": "AES-GCM",
+        "key_hex": "b9e27aa48f8ba7522ecc7bc8d2d314cad594389042e687afdd787dcf5399f7bc",
+        "used_bytes": 1048576,
+        "max_bytes": 68719476736,
+        "domains": [
+          "chunk_52.dat"
+        ],
+        "revoked": false,
+        "timestamp": 4313146.01
+      }
+    },
+    {
+      "node_id": "9fd1bafeb2c4bd34",
+      "prev": "86d2a6cfb8bf4953",
+      "next": "62a87b68cbf880e0",
+      "permit": {
+        "algo": "AES-GCM",
+        "key_hex": "54b70e8a629eb2b550d4b75d09db4b0d03ea4ef39abc09254383dfbb7f58dd3b",
+        "used_bytes": 1048576,
+        "max_bytes": 68719476736,
+        "domains": [
+          "chunk_53.dat"
+        ],
+        "revoked": false,
+        "timestamp": 4313147.01
+      }
+    },
+    {
+      "node_id": "62a87b68cbf880e0",
+      "prev": "9fd1bafeb2c4bd34",
+      "next": "8dd272a516ce81ec",
+      "permit": {
+        "algo": "AES-GCM",
+        "key_hex": "72ae49463004ab129775945c3937663cb7430831bd57f1eadb237c6d71e41157",
+        "used_bytes": 1048576,
+        "max_bytes": 68719476736,
+        "domains": [
+          "chunk_54.dat"
+        ],
+        "revoked": false,
+        "timestamp": 4313148.01
+      }
+    },
+    {
+      "node_id": "8dd272a516ce81ec",
+      "prev": "62a87b68cbf880e0",
+      "next": "c9474edc028b57d2",
+      "permit": {
+        "algo": "AES-GCM",
+        "key_hex": "3161aa91a5f3ffd820565f2058b5f57d806e5fe6f47eb45dabd353e11494577c",
+        "used_bytes": 1048576,
+        "max_bytes": 68719476736,
+        "domains": [
+          "chunk_55.dat"
+        ],
+        "revoked": false,
+        "timestamp": 4313149.01
+      }
+    },
+    {
+      "node_id": "c9474edc028b57d2",
+      "prev": "8dd272a516ce81ec",
+      "next": "6bd37bdc7cd6365a",
+      "permit": {
+        "algo": "AES-GCM",
+        "key_hex": "e4741a433083939c08ee09fef50fd4ab1caee81009cd049ce2f2b1fa5eea36ca",
+        "used_bytes": 1048576,
+        "max_bytes": 68719476736,
+        "domains": [
+          "chunk_56.dat"
+        ],
+        "revoked": false,
+        "timestamp": 4313150.01
+      }
+    },
+    {
+      "node_id": "6bd37bdc7cd6365a",
+      "prev": "c9474edc028b57d2",
+      "next": "ae20f56bb74df044",
+      "permit": {
+        "algo": "AES-GCM",
+        "key_hex": "83f3a66f1f39b4c59cb958b61774641ffc2c66a5dd5b9f36d674951fbbaff641",
+        "used_bytes": 1048576,
+        "max_bytes": 68719476736,
+        "domains": [
+          "chunk_57.dat"
+        ],
+        "revoked": false,
+        "timestamp": 4313151.01
+      }
+    },
+    {
+      "node_id": "ae20f56bb74df044",
+      "prev": "6bd37bdc7cd6365a",
+      "next": "af85c66334563cd4",
+      "permit": {
+        "algo": "AES-GCM",
+        "key_hex": "2fcd72c54c65de2006d6ab15438ba182ad1862dd728ebbda66ddec98222aa47e",
+        "used_bytes": 1048576,
+        "max_bytes": 68719476736,
+        "domains": [
+          "chunk_58.dat"
+        ],
+        "revoked": false,
+        "timestamp": 4313152.01
+      }
+    },
+    {
+      "node_id": "af85c66334563cd4",
+      "prev": "ae20f56bb74df044",
+      "next": "fde185469bfa9858",
+      "permit": {
+        "algo": "AES-GCM",
+        "key_hex": "aa633ad1be08ab22c2d4942f7a5ecbc5b3c9bbd9160c5395c3820f054c43bfbe",
+        "used_bytes": 1048576,
+        "max_bytes": 68719476736,
+        "domains": [
+          "chunk_59.dat"
+        ],
+        "revoked": false,
+        "timestamp": 4313153.01
+      }
+    },
+    {
+      "node_id": "fde185469bfa9858",
+      "prev": "af85c66334563cd4",
+      "next": "f383192e264ee665",
+      "permit": {
+        "algo": "AES-GCM",
+        "key_hex": "eae0c1faa9c5bbcc7c59da97041d9c9d19f2c9015d3c7a599ac45c04d2583e51",
+        "used_bytes": 1048576,
+        "max_bytes": 68719476736,
+        "domains": [
+          "chunk_60.dat"
+        ],
+        "revoked": false,
+        "timestamp": 4313154.01
+      }
+    },
+    {
+      "node_id": "f383192e264ee665",
+      "prev": "fde185469bfa9858",
+      "next": "00c429cdd5b8d581",
+      "permit": {
+        "algo": "AES-GCM",
+        "key_hex": "b6c1639a22ec4f352de6b381de10912e2d950d92ddb61a0fbdfdc70ea4587f36",
+        "used_bytes": 1048576,
+        "max_bytes": 68719476736,
+        "domains": [
+          "chunk_61.dat"
+        ],
+        "revoked": false,
+        "timestamp": 4313155.01
+      }
+    },
+    {
+      "node_id": "00c429cdd5b8d581",
+      "prev": "f383192e264ee665",
+      "next": "8f75d148faf4df6e",
+      "permit": {
+        "algo": "AES-GCM",
+        "key_hex": "e37aca87389b8b9f6c887094cadf670724a1fdc9ab4f98e9bd35fcddd7f958c0",
+        "used_bytes": 1048576,
+        "max_bytes": 68719476736,
+        "domains": [
+          "chunk_62.dat"
+        ],
+        "revoked": false,
+        "timestamp": 4313156.01
+      }
+    },
+    {
+      "node_id": "8f75d148faf4df6e",
+      "prev": "00c429cdd5b8d581",
+      "next": "e490b6b5deedbb2c",
+      "permit": {
+        "algo": "AES-GCM",
+        "key_hex": "4fd0da93dd5aebe69604b51a4848fd1480db036a598d787e46cc41b943269d76",
+        "used_bytes": 1048576,
+        "max_bytes": 68719476736,
+        "domains": [
+          "chunk_63.dat"
+        ],
+        "revoked": false,
+        "timestamp": 4313157.01
+      }
+    },
+    {
+      "node_id": "e490b6b5deedbb2c",
+      "prev": "8f75d148faf4df6e",
+      "next": "57f1d52c3f04212d",
+      "permit": {
+        "algo": "AES-GCM",
+        "key_hex": "39794fd7f27a9d34f0ad3c7e949c3d2b56cf2150c4cc48bf42e8ff2395d7e2c5",
+        "used_bytes": 1048576,
+        "max_bytes": 68719476736,
+        "domains": [
+          "chunk_64.dat"
+        ],
+        "revoked": false,
+        "timestamp": 4313158.01
+      }
+    },
+    {
+      "node_id": "57f1d52c3f04212d",
+      "prev": "e490b6b5deedbb2c",
+      "next": "92e73918ff3c686b",
+      "permit": {
+        "algo": "AES-GCM",
+        "key_hex": "daefb6bcb3897c98dfb44764baf5dc602031bd976b2e08eed0528c8169612b72",
+        "used_bytes": 1048576,
+        "max_bytes": 68719476736,
+        "domains": [
+          "chunk_65.dat"
+        ],
+        "revoked": false,
+        "timestamp": 4313159.01
+      }
+    },
+    {
+      "node_id": "92e73918ff3c686b",
+      "prev": "57f1d52c3f04212d",
+      "next": "ede85b8dca844220",
+      "permit": {
+        "algo": "AES-GCM",
+        "key_hex": "f914a8b3b60f8353e4fb51bb8b933a964ebf6622dcf7668174a2a2bc548087ea",
+        "used_bytes": 1048576,
+        "max_bytes": 68719476736,
+        "domains": [
+          "chunk_66.dat"
+        ],
+        "revoked": false,
+        "timestamp": 4313160.01
+      }
+    },
+    {
+      "node_id": "ede85b8dca844220",
+      "prev": "92e73918ff3c686b",
+      "next": "e66473830bd57437",
+      "permit": {
+        "algo": "AES-GCM",
+        "key_hex": "df74c9a3a159f988379a24abad9e10a8cf5f9adac098c4718eea1b759f772011",
+        "used_bytes": 1048576,
+        "max_bytes": 68719476736,
+        "domains": [
+          "chunk_67.dat"
+        ],
+        "revoked": false,
+        "timestamp": 4313161.01
+      }
+    },
+    {
+      "node_id": "e66473830bd57437",
+      "prev": "ede85b8dca844220",
+      "next": "a638dedb0373c48a",
+      "permit": {
+        "algo": "AES-GCM",
+        "key_hex": "fc4aea39ed7d1f80044111daf48d1ab47e0ca2ce2ac0c88c1c7bb65e6c704d7c",
+        "used_bytes": 1048576,
+        "max_bytes": 68719476736,
+        "domains": [
+          "chunk_68.dat"
+        ],
+        "revoked": false,
+        "timestamp": 4313162.01
+      }
+    },
+    {
+      "node_id": "a638dedb0373c48a",
+      "prev": "e66473830bd57437",
+      "next": "c70aa29b286dd879",
+      "permit": {
+        "algo": "AES-GCM",
+        "key_hex": "2e443164a494f2f816b71281151bf22a773f49af76451c3a7f833b9e4ea73666",
+        "used_bytes": 1048576,
+        "max_bytes": 68719476736,
+        "domains": [
+          "chunk_69.dat"
+        ],
+        "revoked": false,
+        "timestamp": 4313163.01
+      }
+    },
+    {
+      "node_id": "c70aa29b286dd879",
+      "prev": "a638dedb0373c48a",
+      "next": "dfe3b70f89f27578",
+      "permit": {
+        "algo": "AES-GCM",
+        "key_hex": "8e74e24ecc67fcd9a03466c1ad9cdc43b1f442013b4d4247bce3c767146d354c",
+        "used_bytes": 1048576,
+        "max_bytes": 68719476736,
+        "domains": [
+          "chunk_70.dat"
+        ],
+        "revoked": false,
+        "timestamp": 4313164.01
+      }
+    },
+    {
+      "node_id": "dfe3b70f89f27578",
+      "prev": "c70aa29b286dd879",
+      "next": "366c459e1eb7d3b0",
+      "permit": {
+        "algo": "AES-GCM",
+        "key_hex": "e9dd5fa4f4f59b63b96b6c86f8473e56579333ddc15e8e72ffc2f758c78c469a",
+        "used_bytes": 1048576,
+        "max_bytes": 68719476736,
+        "domains": [
+          "chunk_71.dat"
+        ],
+        "revoked": false,
+        "timestamp": 4313165.01
+      }
+    },
+    {
+      "node_id": "366c459e1eb7d3b0",
+      "prev": "dfe3b70f89f27578",
+      "next": "dbfb1c433447ad5e",
+      "permit": {
+        "algo": "AES-GCM",
+        "key_hex": "9edb2f0a1b2cbebe5b24f642ed0cb3bba1a2d0f4e7d6fb21e6c35458773980d9",
+        "used_bytes": 1048576,
+        "max_bytes": 68719476736,
+        "domains": [
+          "chunk_72.dat"
+        ],
+        "revoked": false,
+        "timestamp": 4313166.01
+      }
+    },
+    {
+      "node_id": "dbfb1c433447ad5e",
+      "prev": "366c459e1eb7d3b0",
+      "next": "bfbd4f2e708b3ce3",
+      "permit": {
+        "algo": "AES-GCM",
+        "key_hex": "9a73255ca69d70afc7ec1edbd52d2d8cf063d6dc9945f620521453efb9fa26a7",
+        "used_bytes": 1048576,
+        "max_bytes": 68719476736,
+        "domains": [
+          "chunk_73.dat"
+        ],
+        "revoked": false,
+        "timestamp": 4313167.01
+      }
+    },
+    {
+      "node_id": "bfbd4f2e708b3ce3",
+      "prev": "dbfb1c433447ad5e",
+      "next": "c88b6456d714922e",
+      "permit": {
+        "algo": "AES-GCM",
+        "key_hex": "ca87734cd1cd041172eaa74346cd6a1d4ed3367c48000623581b6fe53a3bccce",
+        "used_bytes": 1048576,
+        "max_bytes": 68719476736,
+        "domains": [
+          "chunk_74.dat"
+        ],
+        "revoked": false,
+        "timestamp": 4313168.01
+      }
+    },
+    {
+      "node_id": "c88b6456d714922e",
+      "prev": "bfbd4f2e708b3ce3",
+      "next": "6c94ca6095d238cb",
+      "permit": {
+        "algo": "AES-GCM",
+        "key_hex": "47225c3229568b5604a8c2d3e08d55059d3c784445be42a37095fe49d7fda5bf",
+        "used_bytes": 1048576,
+        "max_bytes": 68719476736,
+        "domains": [
+          "chunk_75.dat"
+        ],
+        "revoked": false,
+        "timestamp": 4313169.01
+      }
+    },
+    {
+      "node_id": "6c94ca6095d238cb",
+      "prev": "c88b6456d714922e",
+      "next": "086e7dbc18fe890c",
+      "permit": {
+        "algo": "AES-GCM",
+        "key_hex": "edbf85d74732a48b5cd8c227ab1f979baedec2acb10d8518101a2060e906855b",
+        "used_bytes": 1048576,
+        "max_bytes": 68719476736,
+        "domains": [
+          "chunk_76.dat"
+        ],
+        "revoked": false,
+        "timestamp": 4313170.01
+      }
+    },
+    {
+      "node_id": "086e7dbc18fe890c",
+      "prev": "6c94ca6095d238cb",
+      "next": "91efbd75edbd9754",
+      "permit": {
+        "algo": "AES-GCM",
+        "key_hex": "3273b3491b93cb3d1c9110e4c5722a150c95fb8ffda6de2eda26f0d1939031ff",
+        "used_bytes": 1048576,
+        "max_bytes": 68719476736,
+        "domains": [
+          "chunk_77.dat"
+        ],
+        "revoked": false,
+        "timestamp": 4313171.01
+      }
+    },
+    {
+      "node_id": "91efbd75edbd9754",
+      "prev": "086e7dbc18fe890c",
+      "next": "36003fa90777a38e",
+      "permit": {
+        "algo": "AES-GCM",
+        "key_hex": "0169463443f1e47c21c80f6f672b78453ed3c7b23f1d203dde90c52f4ad70fe7",
+        "used_bytes": 1048576,
+        "max_bytes": 68719476736,
+        "domains": [
+          "chunk_78.dat"
+        ],
+        "revoked": false,
+        "timestamp": 4313172.01
+      }
+    },
+    {
+      "node_id": "36003fa90777a38e",
+      "prev": "91efbd75edbd9754",
+      "next": "b279b20c1b7efc24",
+      "permit": {
+        "algo": "AES-GCM",
+        "key_hex": "48194fb80bf8547bf172fe814e86863011015be9d5aa317d1ff3ceb23e9f5b68",
+        "used_bytes": 1048576,
+        "max_bytes": 68719476736,
+        "domains": [
+          "chunk_79.dat"
+        ],
+        "revoked": false,
+        "timestamp": 4313173.01
+      }
+    },
+    {
+      "node_id": "b279b20c1b7efc24",
+      "prev": "36003fa90777a38e",
+      "next": "0354b61ccf54d6ee",
+      "permit": {
+        "algo": "AES-GCM",
+        "key_hex": "3f06b14d0050290b086d0aa17328b89e7b426caef48818e58184eeee9e397ce4",
+        "used_bytes": 1048576,
+        "max_bytes": 68719476736,
+        "domains": [
+          "chunk_80.dat"
+        ],
+        "revoked": false,
+        "timestamp": 4313174.01
+      }
+    },
+    {
+      "node_id": "0354b61ccf54d6ee",
+      "prev": "b279b20c1b7efc24",
+      "next": "a835789c6ef5cdff",
+      "permit": {
+        "algo": "AES-GCM",
+        "key_hex": "7715cd393eb43d00b5bcac3d905a0952a844b0220c75da8824f5570571c70f5f",
+        "used_bytes": 1048576,
+        "max_bytes": 68719476736,
+        "domains": [
+          "chunk_81.dat"
+        ],
+        "revoked": false,
+        "timestamp": 4313175.01
+      }
+    },
+    {
+      "node_id": "a835789c6ef5cdff",
+      "prev": "0354b61ccf54d6ee",
+      "next": "3edc10c436d75039",
+      "permit": {
+        "algo": "AES-GCM",
+        "key_hex": "c32fd39fd93abc7360f8934ad551612642308b01eefcd76bd3e5ebaf8560e686",
+        "used_bytes": 1048576,
+        "max_bytes": 68719476736,
+        "domains": [
+          "chunk_82.dat"
+        ],
+        "revoked": false,
+        "timestamp": 4313176.01
+      }
+    },
+    {
+      "node_id": "3edc10c436d75039",
+      "prev": "a835789c6ef5cdff",
+      "next": "294263212149084a",
+      "permit": {
+        "algo": "AES-GCM",
+        "key_hex": "550db04bc33c81e7a6d619d3be7b8aaedacadfe76791d5627ba962a30f0cc11b",
+        "used_bytes": 1048576,
+        "max_bytes": 68719476736,
+        "domains": [
+          "chunk_83.dat"
+        ],
+        "revoked": false,
+        "timestamp": 4313177.01
+      }
+    },
+    {
+      "node_id": "294263212149084a",
+      "prev": "3edc10c436d75039",
+      "next": "607d2452cd3146fe",
+      "permit": {
+        "algo": "AES-GCM",
+        "key_hex": "93360ace03f9d0c39f03dea22b5577539b02eb736dc90df52823178ffbc92078",
+        "used_bytes": 1048576,
+        "max_bytes": 68719476736,
+        "domains": [
+          "chunk_84.dat"
+        ],
+        "revoked": false,
+        "timestamp": 4313178.01
+      }
+    },
+    {
+      "node_id": "607d2452cd3146fe",
+      "prev": "294263212149084a",
+      "next": "274a503739de65b7",
+      "permit": {
+        "algo": "AES-GCM",
+        "key_hex": "a2e0f758b662a939117567ec0fdd5022300c04e4d694792950b2e945c93818c3",
+        "used_bytes": 1048576,
+        "max_bytes": 68719476736,
+        "domains": [
+          "chunk_85.dat"
+        ],
+        "revoked": false,
+        "timestamp": 4313179.01
+      }
+    },
+    {
+      "node_id": "274a503739de65b7",
+      "prev": "607d2452cd3146fe",
+      "next": "6f14189f31fe4f0c",
+      "permit": {
+        "algo": "AES-GCM",
+        "key_hex": "b75767334c7a9111dba7cd81c127754231a88516973d05fc951812d88c468fdd",
+        "used_bytes": 1048576,
+        "max_bytes": 68719476736,
+        "domains": [
+          "chunk_86.dat"
+        ],
+        "revoked": false,
+        "timestamp": 4313180.01
+      }
+    },
+    {
+      "node_id": "6f14189f31fe4f0c",
+      "prev": "274a503739de65b7",
+      "next": "1cfa8ba8c225ea67",
+      "permit": {
+        "algo": "AES-GCM",
+        "key_hex": "353295be2a3c60376e1653bb3c13d1c64a44e3da28fdeadea98b5c983ac764b6",
+        "used_bytes": 1048576,
+        "max_bytes": 68719476736,
+        "domains": [
+          "chunk_87.dat"
+        ],
+        "revoked": false,
+        "timestamp": 4313181.01
+      }
+    },
+    {
+      "node_id": "1cfa8ba8c225ea67",
+      "prev": "6f14189f31fe4f0c",
+      "next": "3095ba3fcd925c8f",
+      "permit": {
+        "algo": "AES-GCM",
+        "key_hex": "93443dcfec579f2d41a8a82ec09e3ef775bda1e9cb4b4122594371a3fc925b14",
+        "used_bytes": 1048576,
+        "max_bytes": 68719476736,
+        "domains": [
+          "chunk_88.dat"
+        ],
+        "revoked": false,
+        "timestamp": 4313182.01
+      }
+    },
+    {
+      "node_id": "3095ba3fcd925c8f",
+      "prev": "1cfa8ba8c225ea67",
+      "next": "c5d2417be6b661ca",
+      "permit": {
+        "algo": "AES-GCM",
+        "key_hex": "667e1fef1dbc32e6af463106f5fa4e4de2b0029874634eb17667352e86eae4b3",
+        "used_bytes": 1048576,
+        "max_bytes": 68719476736,
+        "domains": [
+          "chunk_89.dat"
+        ],
+        "revoked": false,
+        "timestamp": 4313183.01
+      }
+    },
+    {
+      "node_id": "c5d2417be6b661ca",
+      "prev": "3095ba3fcd925c8f",
+      "next": "5669f1605ed60ecb",
+      "permit": {
+        "algo": "AES-GCM",
+        "key_hex": "993d13e7d3f3a1b5661f3f8e632453759de98bb897550480fe045a4baba2e0f1",
+        "used_bytes": 1048576,
+        "max_bytes": 68719476736,
+        "domains": [
+          "chunk_90.dat"
+        ],
+        "revoked": false,
+        "timestamp": 4313184.01
+      }
+    },
+    {
+      "node_id": "5669f1605ed60ecb",
+      "prev": "c5d2417be6b661ca",
+      "next": "6f0a378f4907561a",
+      "permit": {
+        "algo": "AES-GCM",
+        "key_hex": "7c920cf8b41e669f99a213bae07a2342793826c8e16af270c3e6e1a57e546a8e",
+        "used_bytes": 1048576,
+        "max_bytes": 68719476736,
+        "domains": [
+          "chunk_91.dat"
+        ],
+        "revoked": false,
+        "timestamp": 4313185.01
+      }
+    },
+    {
+      "node_id": "6f0a378f4907561a",
+      "prev": "5669f1605ed60ecb",
+      "next": "fb3e20c444ead916",
+      "permit": {
+        "algo": "AES-GCM",
+        "key_hex": "cdae5713849e89693ee5f25a5a51c2469e11e2612807cce3800c823d4f03ed3a",
+        "used_bytes": 1048576,
+        "max_bytes": 68719476736,
+        "domains": [
+          "chunk_92.dat"
+        ],
+        "revoked": false,
+        "timestamp": 4313186.01
+      }
+    },
+    {
+      "node_id": "fb3e20c444ead916",
+      "prev": "6f0a378f4907561a",
+      "next": "ff74fb49293979bd",
+      "permit": {
+        "algo": "AES-GCM",
+        "key_hex": "e879e404a6b8e3b7fc78c6dccbf6d6efbeb2e9df752adf1132298bee023f90f9",
+        "used_bytes": 1048576,
+        "max_bytes": 68719476736,
+        "domains": [
+          "chunk_93.dat"
+        ],
+        "revoked": false,
+        "timestamp": 4313187.01
+      }
+    },
+    {
+      "node_id": "ff74fb49293979bd",
+      "prev": "fb3e20c444ead916",
+      "next": "40615ec2332c9a85",
+      "permit": {
+        "algo": "AES-GCM",
+        "key_hex": "141c1f50d2942c7cea26f58f59da327f3fabd2b9ef6bfa8db9f32448438a8041",
+        "used_bytes": 1048576,
+        "max_bytes": 68719476736,
+        "domains": [
+          "chunk_94.dat"
+        ],
+        "revoked": false,
+        "timestamp": 4313188.01
+      }
+    },
+    {
+      "node_id": "40615ec2332c9a85",
+      "prev": "ff74fb49293979bd",
+      "next": "e3a1e8951bb6f037",
+      "permit": {
+        "algo": "AES-GCM",
+        "key_hex": "224f77c3c19ae461ef2575e30879c9320b18461ab86316fab945079df82cd034",
+        "used_bytes": 1048576,
+        "max_bytes": 68719476736,
+        "domains": [
+          "chunk_95.dat"
+        ],
+        "revoked": false,
+        "timestamp": 4313189.01
+      }
+    },
+    {
+      "node_id": "e3a1e8951bb6f037",
+      "prev": "40615ec2332c9a85",
+      "next": "1ed131a227792cc1",
+      "permit": {
+        "algo": "AES-GCM",
+        "key_hex": "75d93a5d088a08915e564a44a4700d555118234e82b2098a8318a9e3efed4086",
+        "used_bytes": 1048576,
+        "max_bytes": 68719476736,
+        "domains": [
+          "chunk_96.dat"
+        ],
+        "revoked": false,
+        "timestamp": 4313190.01
+      }
+    },
+    {
+      "node_id": "1ed131a227792cc1",
+      "prev": "e3a1e8951bb6f037",
+      "next": "69d2d53fbf41cd2c",
+      "permit": {
+        "algo": "AES-GCM",
+        "key_hex": "2b34de716f1c152820e8035c43cee440f8e2b001ce5fabc11ee9a00818c77412",
+        "used_bytes": 1048576,
+        "max_bytes": 68719476736,
+        "domains": [
+          "chunk_97.dat"
+        ],
+        "revoked": false,
+        "timestamp": 4313191.01
+      }
+    },
+    {
+      "node_id": "69d2d53fbf41cd2c",
+      "prev": "1ed131a227792cc1",
+      "next": "763f9368a89bb4cc",
+      "permit": {
+        "algo": "AES-GCM",
+        "key_hex": "d853893caff78329899b683d386bbbfbff9b184bd122bc91416f0741cd866c6a",
+        "used_bytes": 1048576,
+        "max_bytes": 68719476736,
+        "domains": [
+          "chunk_98.dat"
+        ],
+        "revoked": false,
+        "timestamp": 4313192.01
+      }
+    },
+    {
+      "node_id": "763f9368a89bb4cc",
+      "prev": "69d2d53fbf41cd2c",
+      "next": null,
+      "permit": {
+        "algo": "AES-GCM",
+        "key_hex": "d47a499c6e96ccaf1603ccf24275633bf2d28150db54b94dbbcd952ebe2bd105",
+        "used_bytes": 1048576,
+        "max_bytes": 68719476736,
+        "domains": [
+          "chunk_99.dat"
+        ],
+        "revoked": false,
+        "timestamp": 4313193.01
+      }
+    }
+  ]
+}
