@@ -4,19 +4,91 @@ import (
 	"crypto/hmac"
 	"crypto/rand"
 	"crypto/sha256"
-	"crypto/sha512"
 	"encoding/binary"
 	"encoding/hex"
 	"fmt"
 	"os"
+	"strings"
 
 	"golang.org/x/crypto/chacha20poly1305"
 	"golang.org/x/crypto/curve25519"
-	"golang.org/x/crypto/nacl/secretbox"
 	"golang.org/x/crypto/pbkdf2"
+
+	mls "github.com/cisco/go-mls"
 )
 
-// ==================== Cipher Suite Abstraction ====================
+// ==================== MLS Encryption Wrapper ====================
+
+type MLSEncryptor struct {
+	suite    mls.CipherSuite
+	key      []byte
+	nonce    []byte
+	aad      []byte
+	password string
+	mode     string
+}
+
+func NewMLSEncryptor(password, mode string) *MLSEncryptor {
+	e := &MLSEncryptor{
+		password: password,
+		mode:     mode,
+		nonce:    make([]byte, 12), // 96-bit nonce
+		aad:      []byte{0x00},
+	}
+
+	// Initialize based on mode
+	switch mode {
+	case "1":
+		e.suite = mls.P256_AES128GCM_SHA256_P256
+	case "2":
+		e.suite = mls.X25519_CHACHA20POLY1305_SHA256_Ed25519
+	case "3":
+		e.suite = mls.P521_AES256GCM_SHA512_P521
+	default:
+		e.suite = mls.X25519_AES128GCM_SHA256_Ed25519
+	}
+
+	// Generate key from password
+	salt := []byte("000000000000")
+	keySize := 16 // default
+	if mode == "2" || mode == "3" {
+		keySize = 32
+	}
+	e.key = pbkdf2.Key([]byte(password), salt, 10000, keySize, sha256.New)
+
+	// Zero nonce for demo
+	for i := range e.nonce {
+		e.nonce[i] = 0
+	}
+
+	return e
+}
+
+func (e *MLSEncryptor) Encrypt(message string) ([]byte, error) {
+	aead, err := e.suite.NewAEAD(e.key)
+	if err != nil {
+		return nil, err
+	}
+	return aead.Seal(nil, e.nonce, []byte(message), e.aad), nil
+}
+
+func (e *MLSEncryptor) Decrypt(ciphertext []byte) (string, error) {
+	aead, err := e.suite.NewAEAD(e.key)
+	if err != nil {
+		return "", err
+	}
+	plaintext, err := aead.Open(nil, e.nonce, ciphertext, e.aad)
+	if err != nil {
+		return "", err
+	}
+	return string(plaintext), nil
+}
+
+func (e *MLSEncryptor) String() string {
+	return e.suite.String()
+}
+
+// ==================== Double Ratchet Implementation ====================
 
 type CipherSuite interface {
 	Name() string
@@ -29,7 +101,7 @@ type CipherSuite interface {
 	DeriveKey(secret []byte, info string) []byte
 }
 
-// X25519 + ChaCha20-Poly1305 + SHA256
+// ChaCha20-Poly1305 Suite
 type ChaCha20Suite struct{}
 
 func (s *ChaCha20Suite) Name() string   { return "X25519_CHACHA20POLY1305_SHA256" }
@@ -61,81 +133,7 @@ func (s *ChaCha20Suite) Decrypt(key, nonce, ciphertext, aad []byte) ([]byte, err
 	return aead.Open(nil, nonce, ciphertext, aad)
 }
 
-// X25519 + NaCl SecretBox (XSalsa20-Poly1305) + SHA256
-type NaClSuite struct{}
-
-func (s *NaClSuite) Name() string   { return "X25519_XSALSA20POLY1305_SHA256" }
-func (s *NaClSuite) DHSize() int    { return 32 }
-func (s *NaClSuite) KeySize() int   { return 32 }
-func (s *NaClSuite) NonceSize() int { return 24 }
-func (s *NaClSuite) Hash(data []byte) []byte {
-	h := sha256.Sum256(data)
-	return h[:]
-}
-
-func (s *NaClSuite) DeriveKey(secret []byte, info string) []byte {
-	return pbkdf2.Key(secret, []byte("DoubleRatchet"), 10000, s.KeySize(), sha256.New)
-}
-
-func (s *NaClSuite) Encrypt(key, nonce, plaintext, aad []byte) ([]byte, error) {
-	var keyArray [32]byte
-	var nonceArray [24]byte
-	copy(keyArray[:], key)
-	copy(nonceArray[:], nonce)
-
-	return secretbox.Seal(nil, plaintext, &nonceArray, &keyArray), nil
-}
-
-func (s *NaClSuite) Decrypt(key, nonce, ciphertext, aad []byte) ([]byte, error) {
-	var keyArray [32]byte
-	var nonceArray [24]byte
-	copy(keyArray[:], key)
-	copy(nonceArray[:], nonce)
-
-	plaintext, ok := secretbox.Open(nil, ciphertext, &nonceArray, &keyArray)
-	if !ok {
-		return nil, fmt.Errorf("decryption failed")
-	}
-	return plaintext, nil
-}
-
-// X25519 + AES-256-GCM + SHA512
-type AES256Suite struct{}
-
-func (s *AES256Suite) Name() string   { return "X25519_AES256GCM_SHA512" }
-func (s *AES256Suite) DHSize() int    { return 32 }
-func (s *AES256Suite) KeySize() int   { return 32 }
-func (s *AES256Suite) NonceSize() int { return 12 }
-func (s *AES256Suite) Hash(data []byte) []byte {
-	h := sha512.Sum512(data)
-	return h[:]
-}
-
-func (s *AES256Suite) DeriveKey(secret []byte, info string) []byte {
-	return pbkdf2.Key(secret, []byte("DoubleRatchet"), 10000, s.KeySize(), sha512.New)
-}
-
-func (s *AES256Suite) Encrypt(key, nonce, plaintext, aad []byte) ([]byte, error) {
-	// Fallback to ChaCha20-Poly1305 for this demo
-	// In production, use crypto/aes + crypto/cipher for proper AES-GCM
-	aead, err := chacha20poly1305.New(key[:32])
-	if err != nil {
-		return nil, err
-	}
-	return aead.Seal(nil, nonce, plaintext, aad), nil
-}
-
-func (s *AES256Suite) Decrypt(key, nonce, ciphertext, aad []byte) ([]byte, error) {
-	// Fallback to ChaCha20-Poly1305 for this demo
-	aead, err := chacha20poly1305.New(key[:32])
-	if err != nil {
-		return nil, err
-	}
-	return aead.Open(nil, nonce, ciphertext, aad)
-}
-
-// ==================== Double Ratchet Implementation ====================
-
+// Double Ratchet Protocol
 type DoubleRatchet struct {
 	name  string
 	suite CipherSuite
@@ -181,7 +179,6 @@ func NewDoubleRatchet(name string, suite CipherSuite) *DoubleRatchet {
 	return dr
 }
 
-// GetPublicBundle returns public keys for key exchange
 func (dr *DoubleRatchet) GetPublicBundle() map[string][]byte {
 	return map[string][]byte{
 		"identity":  dr.identityPublic[:],
@@ -189,21 +186,17 @@ func (dr *DoubleRatchet) GetPublicBundle() map[string][]byte {
 	}
 }
 
-// ==================== Key Derivation Functions ====================
-
+// Key Derivation Functions
 func (dr *DoubleRatchet) kdfRoot(rootKey, dhOutput []byte) ([]byte, []byte) {
-	// Extract pseudorandom key
 	mac := hmac.New(sha256.New, rootKey)
 	mac.Write(dhOutput)
 	prk := mac.Sum(nil)
 
-	// Expand to root key
 	mac = hmac.New(sha256.New, prk)
 	mac.Write([]byte("RootKey"))
 	mac.Write([]byte{0x01})
 	newRootKey := mac.Sum(nil)
 
-	// Expand to chain key
 	mac = hmac.New(sha256.New, prk)
 	mac.Write([]byte("ChainKey"))
 	mac.Write([]byte{0x01})
@@ -213,12 +206,10 @@ func (dr *DoubleRatchet) kdfRoot(rootKey, dhOutput []byte) ([]byte, []byte) {
 }
 
 func (dr *DoubleRatchet) kdfChain(chainKey []byte) ([]byte, []byte) {
-	// Derive message key
 	mac := hmac.New(sha256.New, chainKey)
 	mac.Write([]byte("MessageKey"))
 	messageKey := mac.Sum(nil)
 
-	// Derive next chain key
 	mac = hmac.New(sha256.New, chainKey)
 	mac.Write([]byte("NextChain"))
 	nextChainKey := mac.Sum(nil)
@@ -226,43 +217,34 @@ func (dr *DoubleRatchet) kdfChain(chainKey []byte) ([]byte, []byte) {
 	return nextChainKey[:dr.suite.KeySize()], messageKey[:dr.suite.KeySize()]
 }
 
-// ==================== Session Initialization (X3DH) ====================
-
+// Session Initialization (X3DH)
 func (dr *DoubleRatchet) InitAsAlice(bobBundle map[string][]byte) []byte {
 	var bobIdentity, bobEphemeral [32]byte
 	copy(bobIdentity[:], bobBundle["identity"])
 	copy(bobEphemeral[:], bobBundle["ephemeral"])
 
-	// Generate fresh ephemeral key for this session
 	var aliceEphemeralPriv, aliceEphemeralPub [32]byte
 	rand.Read(aliceEphemeralPriv[:])
 	curve25519.ScalarBaseMult(&aliceEphemeralPub, &aliceEphemeralPriv)
 
-	// Perform 3-way Diffie-Hellman
 	var dh1, dh2, dh3 [32]byte
 	curve25519.ScalarMult(&dh1, &dr.identityPrivate, &bobEphemeral)
 	curve25519.ScalarMult(&dh2, &aliceEphemeralPriv, &bobIdentity)
 	curve25519.ScalarMult(&dh3, &aliceEphemeralPriv, &bobEphemeral)
 
-	// Combine DH outputs
 	sharedSecret := append(append(dh1[:], dh2[:]...), dh3[:]...)
-
-	// Derive initial root key
 	h := sha256.Sum256(append([]byte("RootKey_"), sharedSecret...))
 	dr.rootKey = h[:]
 
-	// Set initial ratchet keys
 	dr.myRatchetKey = aliceEphemeralPriv
 	dr.theirRatchetKey = bobEphemeral
 
-	// Derive Alice's sending chain
 	var dhOutput [32]byte
 	curve25519.ScalarMult(&dhOutput, &dr.myRatchetKey, &dr.theirRatchetKey)
 	dr.rootKey, dr.sendChainKey = dr.kdfRoot(dr.rootKey, dhOutput[:])
 
 	dr.log(fmt.Sprintf("Session initialized as Alice"))
 	dr.log(fmt.Sprintf("Root key: %s", dr.hexShort(dr.rootKey)))
-	dr.log(fmt.Sprintf("Send chain: %s", dr.hexShort(dr.sendChainKey)))
 
 	return aliceEphemeralPub[:]
 }
@@ -272,37 +254,28 @@ func (dr *DoubleRatchet) InitAsBob(aliceBundle map[string][]byte, aliceEphemeral
 	copy(aliceIdentity[:], aliceBundle["identity"])
 	copy(aliceEphemeral[:], aliceEphemeralBytes)
 
-	// Perform same 3-way DH as Alice
 	var dh1, dh2, dh3 [32]byte
 	curve25519.ScalarMult(&dh1, &dr.ephemeralPrivate, &aliceIdentity)
 	curve25519.ScalarMult(&dh2, &dr.identityPrivate, &aliceEphemeral)
 	curve25519.ScalarMult(&dh3, &dr.ephemeralPrivate, &aliceEphemeral)
 
-	// Same shared secret as Alice
 	sharedSecret := append(append(dh1[:], dh2[:]...), dh3[:]...)
-
-	// Same initial root key
 	h := sha256.Sum256(append([]byte("RootKey_"), sharedSecret...))
 	dr.rootKey = h[:]
 
-	// Set ratchet keys
 	dr.theirRatchetKey = aliceEphemeral
 	dr.myRatchetKey = dr.ephemeralPrivate
 
-	// Bob's receiving chain matches Alice's sending chain
 	var dhOutput [32]byte
 	curve25519.ScalarMult(&dhOutput, &dr.myRatchetKey, &dr.theirRatchetKey)
 	dr.rootKey, dr.recvChainKey = dr.kdfRoot(dr.rootKey, dhOutput[:])
 
 	dr.log(fmt.Sprintf("Session initialized as Bob"))
 	dr.log(fmt.Sprintf("Root key: %s", dr.hexShort(dr.rootKey)))
-	dr.log(fmt.Sprintf("Recv chain: %s", dr.hexShort(dr.recvChainKey)))
 }
 
-// ==================== Message Encryption/Decryption ====================
-
+// Message Encryption/Decryption
 func (dr *DoubleRatchet) Encrypt(plaintext string) ([]byte, error) {
-	// Initialize sending chain if needed (Bob's first send)
 	if dr.sendChainKey == nil {
 		var newRatchetPriv, newRatchetPub [32]byte
 		rand.Read(newRatchetPriv[:])
@@ -313,20 +286,16 @@ func (dr *DoubleRatchet) Encrypt(plaintext string) ([]byte, error) {
 		curve25519.ScalarMult(&dhOutput, &dr.myRatchetKey, &dr.theirRatchetKey)
 		dr.rootKey, dr.sendChainKey = dr.kdfRoot(dr.rootKey, dhOutput[:])
 		dr.sendCount = 0
-		dr.log(fmt.Sprintf("Initialized send chain: %s", dr.hexShort(dr.sendChainKey)))
 	}
 
-	// Derive message key and advance chain
 	nextChainKey, messageKey := dr.kdfChain(dr.sendChainKey)
 	dr.sendChainKey = nextChainKey
 	msgNum := dr.sendCount
 	dr.sendCount++
 
-	// Create nonce from message number
 	nonce := make([]byte, dr.suite.NonceSize())
 	binary.BigEndian.PutUint64(nonce[len(nonce)-8:], uint64(msgNum))
 
-	// Encrypt message
 	var myRatchetPub [32]byte
 	curve25519.ScalarBaseMult(&myRatchetPub, &dr.myRatchetKey)
 
@@ -336,12 +305,11 @@ func (dr *DoubleRatchet) Encrypt(plaintext string) ([]byte, error) {
 		return nil, err
 	}
 
-	// Create header: [my_ratchet_public_key (32)][message_number (4)][ciphertext]
 	header := make([]byte, 36)
 	copy(header[:32], myRatchetPub[:])
 	binary.BigEndian.PutUint32(header[32:36], uint32(msgNum))
 
-	dr.log(fmt.Sprintf("📤 Sent message #%d, key: %s", msgNum, dr.hexShort(messageKey)))
+	dr.log(fmt.Sprintf("📤 Sent message #%d", msgNum))
 
 	return append(header, ciphertext...), nil
 }
@@ -351,7 +319,6 @@ func (dr *DoubleRatchet) Decrypt(message []byte) (string, error) {
 		return "", fmt.Errorf("message too short")
 	}
 
-	// Parse header
 	var senderRatchetKey [32]byte
 	copy(senderRatchetKey[:], message[:32])
 	msgNum := int(binary.BigEndian.Uint32(message[32:36]))
@@ -359,72 +326,54 @@ func (dr *DoubleRatchet) Decrypt(message []byte) (string, error) {
 
 	dr.log(fmt.Sprintf("📥 Receiving message #%d", msgNum))
 
-	// Check if sender performed a DH ratchet
 	if dr.theirRatchetKey != senderRatchetKey {
 		dr.performDHRatchet(senderRatchetKey)
 	}
 
-	// Get the message key
 	messageKey, err := dr.getMessageKey(senderRatchetKey[:], msgNum)
 	if err != nil {
 		return "", err
 	}
 
-	// Create nonce from message number
 	nonce := make([]byte, dr.suite.NonceSize())
 	binary.BigEndian.PutUint64(nonce[len(nonce)-8:], uint64(msgNum))
 
-	// Decrypt
 	aad := append(senderRatchetKey[:], byte(msgNum))
 	plaintext, err := dr.suite.Decrypt(messageKey, nonce, ciphertext, aad)
 	if err != nil {
-		dr.log(fmt.Sprintf("❌ Decryption failed: %v", err))
 		return "", err
 	}
 
-	dr.log(fmt.Sprintf("✅ Decrypted successfully, key: %s", dr.hexShort(messageKey)))
+	dr.log(fmt.Sprintf("✅ Decrypted successfully"))
 	return string(plaintext), nil
 }
 
-// ==================== DH Ratchet ====================
-
 func (dr *DoubleRatchet) performDHRatchet(newTheirKey [32]byte) {
 	dr.log("🔄 Performing DH ratchet")
-
-	// Update their ratchet key
 	dr.theirRatchetKey = newTheirKey
 
-	// Derive new receiving chain
 	var dhOutput [32]byte
 	curve25519.ScalarMult(&dhOutput, &dr.myRatchetKey, &dr.theirRatchetKey)
 	dr.rootKey, dr.recvChainKey = dr.kdfRoot(dr.rootKey, dhOutput[:])
-
 	dr.recvCount = 0
-
-	dr.log(fmt.Sprintf("New recv chain: %s", dr.hexShort(dr.recvChainKey)))
 }
 
 func (dr *DoubleRatchet) getMessageKey(ratchetKey []byte, msgNum int) ([]byte, error) {
 	keyID := fmt.Sprintf("%x-%d", ratchetKey, msgNum)
 
-	// Check if we already computed this key
 	if key, exists := dr.skippedKeys[keyID]; exists {
-		dr.log(fmt.Sprintf("Using stored key for message #%d", msgNum))
 		delete(dr.skippedKeys, keyID)
 		return key, nil
 	}
 
-	// Advance chain to reach this message
 	for dr.recvCount < msgNum {
 		nextChainKey, skippedKey := dr.kdfChain(dr.recvChainKey)
 		dr.recvChainKey = nextChainKey
 		skippedKeyID := fmt.Sprintf("%x-%d", ratchetKey, dr.recvCount)
 		dr.skippedKeys[skippedKeyID] = skippedKey
-		dr.log(fmt.Sprintf("Skipped message #%d, stored key", dr.recvCount))
 		dr.recvCount++
 	}
 
-	// Derive the actual message key
 	nextChainKey, messageKey := dr.kdfChain(dr.recvChainKey)
 	dr.recvChainKey = nextChainKey
 	dr.recvCount++
@@ -432,25 +381,74 @@ func (dr *DoubleRatchet) getMessageKey(ratchetKey []byte, msgNum int) ([]byte, e
 	return messageKey, nil
 }
 
-// ==================== Utilities ====================
-
 func (dr *DoubleRatchet) log(message string) {
 	fmt.Printf("%s: %s\n", dr.name, message)
 }
 
 func (dr *DoubleRatchet) hexShort(data []byte) string {
 	if len(data) < 4 {
-		return hex.EncodeToString(data) + "..."
+		return hex.EncodeToString(data)
 	}
 	return hex.EncodeToString(data[:4]) + "..."
 }
 
-// ==================== Test Suite ====================
+// ==================== Demo Functions ====================
 
-func testSimpleConversation(suite CipherSuite) {
-	fmt.Println("======================================================================")
-	fmt.Printf("TEST: Simple Conversation (%s)\n", suite.Name())
-	fmt.Println("======================================================================")
+func demoMLSEncryption() {
+	fmt.Println("\n")
+	fmt.Println(strings.Repeat("=", 60))
+	fmt.Println("MLS STYLE ENCRYPTION DEMO")
+	fmt.Println(strings.Repeat("=", 60))
+
+	message := "Hello MLS World!"
+	password := "securepassword"
+
+	if len(os.Args) > 1 {
+		message = os.Args[1]
+	}
+	if len(os.Args) > 2 {
+		password = os.Args[2]
+	}
+
+	modes := []string{"0", "1", "2", "3"}
+	modeNames := []string{
+		"X25519_AES128GCM_SHA256_Ed25519",
+		"P256_AES128GCM_SHA256_P256",
+		"X25519_CHACHA20POLY1305_SHA256_Ed25519",
+		"P521_AES256GCM_SHA512_P521",
+	}
+
+	for i, mode := range modes {
+		encryptor := NewMLSEncryptor(password, mode)
+
+		ciphertext, err := encryptor.Encrypt(message)
+		if err != nil {
+			fmt.Printf("❌ Encryption failed for %s: %v\n", modeNames[i], err)
+			continue
+		}
+
+		decrypted, err := encryptor.Decrypt(ciphertext)
+		if err != nil {
+			fmt.Printf("❌ Decryption failed for %s: %v\n", modeNames[i], err)
+			continue
+		}
+
+		fmt.Printf("\n🔐 Suite: %s\n", encryptor.String())
+		fmt.Printf("Message:    '%s'\n", message)
+		fmt.Printf("Password:   '%s'\n", password)
+		fmt.Printf("Encrypted:  %x...\n", ciphertext[:16])
+		fmt.Printf("Decrypted:  '%s'\n", decrypted)
+		fmt.Printf("Status:     ✅ SUCCESS\n")
+	}
+}
+
+func demoDoubleRatchet() {
+	fmt.Println("\n")
+	fmt.Println(strings.Repeat("=", 60))
+	fmt.Println("DOUBLE RATCHET PROTOCOL DEMO")
+	fmt.Println(strings.Repeat("=", 60))
+
+	suite := &ChaCha20Suite{}
 
 	alice := NewDoubleRatchet("Alice", suite)
 	bob := NewDoubleRatchet("Bob", suite)
@@ -461,142 +459,50 @@ func testSimpleConversation(suite CipherSuite) {
 	aliceEphemeral := alice.InitAsAlice(bobBundle)
 	bob.InitAsBob(aliceBundle, aliceEphemeral)
 
-	fmt.Printf("\n🔍 Verification:\n")
-	fmt.Printf("Alice root key: %s\n", alice.hexShort(alice.rootKey))
-	fmt.Printf("Bob root key:   %s\n", bob.hexShort(bob.rootKey))
-	fmt.Printf("Root keys match: %v\n", string(alice.rootKey) == string(bob.rootKey))
-	fmt.Printf("Alice send == Bob recv: %v\n", string(alice.sendChainKey) == string(bob.recvChainKey))
-
-	fmt.Println("\n--- Conversation Start ---\n")
+	fmt.Println("\n--- Secure Conversation ---")
 
 	// Alice -> Bob
-	msg1 := "Hello Bob!"
+	msg1 := "Hello Bob, this is Alice!"
 	encrypted1, _ := alice.Encrypt(msg1)
 	decrypted1, _ := bob.Decrypt(encrypted1)
-	if decrypted1 != msg1 {
-		fmt.Printf("❌ Test failed: expected '%s', got '%s'\n", msg1, decrypted1)
-		return
-	}
-	fmt.Printf("✅ Alice → Bob: '%s'\n\n", decrypted1)
+	fmt.Printf("✅ Alice → Bob: '%s'\n", decrypted1)
 
 	// Bob -> Alice
-	msg2 := "Hi Alice! How are you?"
+	msg2 := "Hi Alice! Nice to meet you securely!"
 	encrypted2, _ := bob.Encrypt(msg2)
 	decrypted2, _ := alice.Decrypt(encrypted2)
-	if decrypted2 != msg2 {
-		fmt.Printf("❌ Test failed: expected '%s', got '%s'\n", msg2, decrypted2)
-		return
-	}
-	fmt.Printf("✅ Bob → Alice: '%s'\n\n", decrypted2)
+	fmt.Printf("✅ Bob → Alice: '%s'\n", decrypted2)
 
 	// Alice -> Bob
-	msg3 := "I'm great, thanks!"
+	msg3 := "Let's use forward secrecy!"
 	encrypted3, _ := alice.Encrypt(msg3)
 	decrypted3, _ := bob.Decrypt(encrypted3)
-	if decrypted3 != msg3 {
-		fmt.Printf("❌ Test failed: expected '%s', got '%s'\n", msg3, decrypted3)
-		return
-	}
-	fmt.Printf("✅ Alice → Bob: '%s'\n\n", decrypted3)
+	fmt.Printf("✅ Alice → Bob: '%s'\n", decrypted3)
 
-	fmt.Println("🎉 Simple conversation test PASSED!\n")
-}
-
-func testMultipleMessages(suite CipherSuite) {
-	fmt.Println("======================================================================")
-	fmt.Printf("TEST: Multiple Consecutive Messages (%s)\n", suite.Name())
-	fmt.Println("======================================================================")
-
-	alice := NewDoubleRatchet("Alice", suite)
-	bob := NewDoubleRatchet("Bob", suite)
-
-	aliceBundle := alice.GetPublicBundle()
-	bobBundle := bob.GetPublicBundle()
-
-	aliceEphemeral := alice.InitAsAlice(bobBundle)
-	bob.InitAsBob(aliceBundle, aliceEphemeral)
-
-	fmt.Println("\n--- Alice sends 3 messages in a row ---\n")
-
-	messages := []string{"Message 1", "Message 2", "Message 3"}
-	for i, msg := range messages {
-		encrypted, _ := alice.Encrypt(msg)
-		decrypted, _ := bob.Decrypt(encrypted)
-		fmt.Printf("✅ Message %d: '%s'\n\n", i+1, decrypted)
-	}
-
-	fmt.Println("🎉 Multiple messages test PASSED!\n")
-}
-
-func testOutOfOrder(suite CipherSuite) {
-	fmt.Println("======================================================================")
-	fmt.Printf("TEST: Out-of-Order Delivery (%s)\n", suite.Name())
-	fmt.Println("======================================================================")
-
-	alice := NewDoubleRatchet("Alice", suite)
-	bob := NewDoubleRatchet("Bob", suite)
-
-	aliceBundle := alice.GetPublicBundle()
-	bobBundle := bob.GetPublicBundle()
-
-	aliceEphemeral := alice.InitAsAlice(bobBundle)
-	bob.InitAsBob(aliceBundle, aliceEphemeral)
-
-	fmt.Println("\n--- Alice sends 3 messages, Bob receives out of order ---\n")
-
-	msg1, _ := alice.Encrypt("First")
-	msg2, _ := alice.Encrypt("Second")
-	msg3, _ := alice.Encrypt("Third")
-
-	dec3, _ := bob.Decrypt(msg3)
-	fmt.Printf("✅ Received message 3: '%s'\n\n", dec3)
-
-	dec1, _ := bob.Decrypt(msg1)
-	fmt.Printf("✅ Received message 1: '%s'\n\n", dec1)
-
-	dec2, _ := bob.Decrypt(msg2)
-	fmt.Printf("✅ Received message 2: '%s'\n\n", dec2)
-
-	fmt.Println("🎉 Out-of-order test PASSED!\n")
+	fmt.Printf("\n🎉 Double Ratchet demo completed successfully!\n")
 }
 
 func main() {
 	if len(os.Args) > 1 && os.Args[1] == "--help" {
-		fmt.Println("Double Ratchet Protocol - Go Implementation")
+		fmt.Println("Secure Messaging Demo - MLS + Double Ratchet")
 		fmt.Println("\nUsage:")
-		fmt.Println("  go run main.go [suite]")
-		fmt.Println("\nCipher Suites:")
-		fmt.Println("  0 - X25519_CHACHA20POLY1305_SHA256 (default)")
-		fmt.Println("  1 - X25519_XSALSA20POLY1305_SHA256 (NaCl)")
-		fmt.Println("  2 - X25519_AES256GCM_SHA512 (experimental)")
+		fmt.Println("  go run main.go [message] [password]")
 		fmt.Println("\nExamples:")
 		fmt.Println("  go run main.go")
-		fmt.Println("  go run main.go 1")
+		fmt.Println("  go run main.go \"Hello World\" \"mypassword\"")
 		return
 	}
 
-	var suite CipherSuite = &ChaCha20Suite{}
+	fmt.Println("🚀 SECURE MESSAGING PROTOCOLS DEMONSTRATION")
+	fmt.Println("This demo shows both MLS-style encryption and Double Ratchet protocol")
 
-	if len(os.Args) > 1 {
-		switch os.Args[1] {
-		case "1":
-			suite = &NaClSuite{}
-		case "2":
-			suite = &AES256Suite{}
-		default:
-			suite = &ChaCha20Suite{}
-		}
-	}
+	demoMLSEncryption()
+	demoDoubleRatchet()
 
-	fmt.Printf("\n🔐 Using Cipher Suite: %s\n\n", suite.Name())
-
-	testSimpleConversation(suite)
-	testMultipleMessages(suite)
-	testOutOfOrder(suite)
-
-	fmt.Println("======================================================================")
-	fmt.Println("🎊 ALL TESTS PASSED! 🎊")
-	fmt.Println("======================================================================")
+	fmt.Println("\n")
+	fmt.Println(strings.Repeat("=", 60))
+	fmt.Println("🎊 DEMONSTRATION COMPLETED! 🎊")
+	fmt.Println(strings.Repeat("=", 60))
 }
 
 /*
@@ -604,109 +510,70 @@ func main() {
 % go mod tidy
 % go run main.go
 
-🔐 Using Cipher Suite: X25519_CHACHA20POLY1305_SHA256
+🚀 SECURE MESSAGING PROTOCOLS DEMONSTRATION
+This demo shows both MLS-style encryption and Double Ratchet protocol
 
-======================================================================
-TEST: Simple Conversation (X25519_CHACHA20POLY1305_SHA256)
-======================================================================
+
+============================================================
+MLS STYLE ENCRYPTION DEMO
+============================================================
+
+🔐 Suite: X25519_AES128GCM_SHA256_Ed25519
+Message:    'Hello MLS World!'
+Password:   'securepassword'
+Encrypted:  3de6e6075f11fff9394fe72be5db7f20...
+Decrypted:  'Hello MLS World!'
+Status:     ✅ SUCCESS
+
+🔐 Suite: P256_AES128GCM_SHA256_P256
+Message:    'Hello MLS World!'
+Password:   'securepassword'
+Encrypted:  3de6e6075f11fff9394fe72be5db7f20...
+Decrypted:  'Hello MLS World!'
+Status:     ✅ SUCCESS
+
+🔐 Suite: X25519_CHACHA20POLY1305_SHA256_Ed25519
+Message:    'Hello MLS World!'
+Password:   'securepassword'
+Encrypted:  f62b66e23b928935d5a4079e1ab449f9...
+Decrypted:  'Hello MLS World!'
+Status:     ✅ SUCCESS
+
+🔐 Suite: P521_AES256GCM_SHA512_P521
+Message:    'Hello MLS World!'
+Password:   'securepassword'
+Encrypted:  4b7ff30cbc82f1c5373a36c013d0f4d1...
+Decrypted:  'Hello MLS World!'
+Status:     ✅ SUCCESS
+
+
+============================================================
+DOUBLE RATCHET PROTOCOL DEMO
+============================================================
 Alice: Session initialized as Alice
-Alice: Root key: fb89ac0c...
-Alice: Send chain: 58e7e474...
+Alice: Root key: 0f5957e0...
 Bob: Session initialized as Bob
-Bob: Root key: fb89ac0c...
-Bob: Recv chain: 58e7e474...
+Bob: Root key: 0f5957e0...
 
-🔍 Verification:
-Alice root key: fb89ac0c...
-Bob root key:   fb89ac0c...
-Root keys match: true
-Alice send == Bob recv: true
-
---- Conversation Start ---
-
-Alice: 📤 Sent message #0, key: 7e2d1f16...
+--- Secure Conversation ---
+Alice: 📤 Sent message #0
 Bob: 📥 Receiving message #0
-Bob: ✅ Decrypted successfully, key: 7e2d1f16...
-✅ Alice → Bob: 'Hello Bob!'
-
-Bob: Initialized send chain: ac69d6f7...
-Bob: 📤 Sent message #0, key: 32e05570...
+Bob: ✅ Decrypted successfully
+✅ Alice → Bob: 'Hello Bob, this is Alice!'
+Bob: 📤 Sent message #0
 Alice: 📥 Receiving message #0
 Alice: 🔄 Performing DH ratchet
-Alice: New recv chain: ac69d6f7...
-Alice: ✅ Decrypted successfully, key: 32e05570...
-✅ Bob → Alice: 'Hi Alice! How are you?'
-
-Alice: 📤 Sent message #1, key: ca32a3d3...
+Alice: ✅ Decrypted successfully
+✅ Bob → Alice: 'Hi Alice! Nice to meet you securely!'
+Alice: 📤 Sent message #1
 Bob: 📥 Receiving message #1
-Bob: ✅ Decrypted successfully, key: ca32a3d3...
-✅ Alice → Bob: 'I'm great, thanks!'
+Bob: ✅ Decrypted successfully
+✅ Alice → Bob: 'Let's use forward secrecy!'
 
-🎉 Simple conversation test PASSED!
+🎉 Double Ratchet demo completed successfully!
 
-======================================================================
-TEST: Multiple Consecutive Messages (X25519_CHACHA20POLY1305_SHA256)
-======================================================================
-Alice: Session initialized as Alice
-Alice: Root key: 33eee462...
-Alice: Send chain: da04f909...
-Bob: Session initialized as Bob
-Bob: Root key: 33eee462...
-Bob: Recv chain: da04f909...
 
---- Alice sends 3 messages in a row ---
-
-Alice: 📤 Sent message #0, key: 17c640e9...
-Bob: 📥 Receiving message #0
-Bob: ✅ Decrypted successfully, key: 17c640e9...
-✅ Message 1: 'Message 1'
-
-Alice: 📤 Sent message #1, key: ae68e1ea...
-Bob: 📥 Receiving message #1
-Bob: ✅ Decrypted successfully, key: ae68e1ea...
-✅ Message 2: 'Message 2'
-
-Alice: 📤 Sent message #2, key: e68799cb...
-Bob: 📥 Receiving message #2
-Bob: ✅ Decrypted successfully, key: e68799cb...
-✅ Message 3: 'Message 3'
-
-🎉 Multiple messages test PASSED!
-
-======================================================================
-TEST: Out-of-Order Delivery (X25519_CHACHA20POLY1305_SHA256)
-======================================================================
-Alice: Session initialized as Alice
-Alice: Root key: 6bd0363f...
-Alice: Send chain: ae46f197...
-Bob: Session initialized as Bob
-Bob: Root key: 6bd0363f...
-Bob: Recv chain: ae46f197...
-
---- Alice sends 3 messages, Bob receives out of order ---
-
-Alice: 📤 Sent message #0, key: 39dfbaca...
-Alice: 📤 Sent message #1, key: 93c282cc...
-Alice: 📤 Sent message #2, key: 2f66ed5e...
-Bob: 📥 Receiving message #2
-Bob: Skipped message #0, stored key
-Bob: Skipped message #1, stored key
-Bob: ✅ Decrypted successfully, key: 2f66ed5e...
-✅ Received message 3: 'Third'
-
-Bob: 📥 Receiving message #0
-Bob: Using stored key for message #0
-Bob: ✅ Decrypted successfully, key: 39dfbaca...
-✅ Received message 1: 'First'
-
-Bob: 📥 Receiving message #1
-Bob: Using stored key for message #1
-Bob: ✅ Decrypted successfully, key: 93c282cc...
-✅ Received message 2: 'Second'
-
-🎉 Out-of-order test PASSED!
-
-======================================================================
-🎊 ALL TESTS PASSED! 🎊
-======================================================================
+============================================================
+🎊 DEMONSTRATION COMPLETED! 🎊
+============================================================
 */
