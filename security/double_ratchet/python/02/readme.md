@@ -59,7 +59,7 @@ Think of it as two gears (ratchets) working together:
 
 ## 🧩 Key Concepts Explained
 
-### 1. Keys (Not the Metal Kind!)
+### 1. Keys 
 
 Think of keys like passwords, but mathematical:
 
